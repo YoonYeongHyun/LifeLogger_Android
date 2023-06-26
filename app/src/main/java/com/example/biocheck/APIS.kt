@@ -1,6 +1,5 @@
 package com.example.biocheck
 
-import io.reactivex.internal.operators.flowable.FlowableTakeLastOne
 import retrofit2.Call
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
@@ -127,5 +126,25 @@ interface insertDbInfoAPI {
         @Field("USER_ID") USER_ID: String?,
         @Field("DB_VALUE") DB_VALUE: Int,
         @Field("DB_TIME") DB_TIME: String,
+    ): Call<stateModel>
+}
+
+
+interface insertAppsInfoAPI {
+    @FormUrlEncoded
+    @POST(MyApi.insertAppsInfo)
+    fun getInsertAppsInfo(
+        @Field("USER_ID") USER_ID: String?,
+        @Field("APP_NAME") APP_NAME: String,
+        @Field("APP_CATEGORY") APP_CATEGORY: String,
+        @Field("INSTALL_DATE") INSTALL_TIME: String,
+    ): Call<stateModel>
+}
+
+interface deleteAppsInfoAPI {
+    @FormUrlEncoded
+    @POST(MyApi.deleteAppsInfo)
+    fun getDeleteAppsInfo(
+        @Field("USER_ID") USER_ID: String?,
     ): Call<stateModel>
 }

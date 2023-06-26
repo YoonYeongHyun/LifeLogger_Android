@@ -8,7 +8,6 @@ import android.app.usage.UsageStatsManager
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.content.pm.ApplicationInfo
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
@@ -31,11 +30,7 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.example.biocheck.databinding.ActivityMainBinding
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import java.io.IOException
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -51,16 +46,6 @@ class MainActivity : AppCompatActivity() {
     private var backKeyPressedTime : Long = 0
     private var terminationTime : Long = 2500
 
-    //센서 전용 변수
-    /*
-    private var sensorManager: SensorManager? = null
-    private var stepCountSensor: Sensor? = null
-    private var stepCountView: TextView? = null
-    private var lightView: TextView? = null
-    private var currentSteps = 1
-    private var lightSensor: Sensor? = null
-    private var light = ""
-    */
 
     var operation = false
     //녹음관련 프로퍼티
@@ -94,11 +79,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        /*
-        val intent = Intent(applicationContext, LoginActivity::class.java)
-        intent.putExtra("message", "액티비티가 이동됐다!")
-        startActivity(intent)
-*/
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(R.layout.activity_main)
@@ -124,64 +104,6 @@ class MainActivity : AppCompatActivity() {
         val start_button = findViewById<Button>(R.id.start_button)
         val end_button = findViewById<Button>(R.id.end_button)
 
-        //데시벨 관련
-        //getDb()
-/*
-        stepCountView = findViewById<View>(R.id.stepCountView) as TextView
-        stepCountSensor = sensorManager!!.getDefaultSensor(Sensor.TYPE_STEP_COUNTER)
-         if (stepCountSensor == null) Toast.makeText(this, "No Step Sensor", Toast.LENGTH_SHORT)
-            .show()
-*/
-
-        //애플리케이션 목록 생성
-        val context: Context = this@MainActivity
-        val pm = context.packageManager
-        val result = packageManager.getInstalledPackages(0)
-        println("앱 개수 : ${result.size}")
-        val appData = ArrayList<String>()
-        if (result != null) {
-            for (info in result) {
-
-                val packageName = info.packageName
-                val appName = info.applicationInfo.loadLabel(pm) as String
-                var category_sequence = ApplicationInfo.getCategoryTitle(this, info.applicationInfo.category)
-                var category :String = "null"
-                appData.add("$packageName   ::$appName <$category>\n")
-                if(category_sequence != null){
-                    category = category_sequence.toString()
-                }
-
-                System.out.println("==========================================================");
-                System.out.println("패키지명 : $packageName");
-                System.out.println("앱이름 : $appName");
-                System.out.println("카테고리 : $category");
-            }
-        }
-
-        /*
-        lightView = findViewById<View>(R.id.lightView) as TextView
-        sensorManager = getSystemService(SENSOR_SERVICE) as SensorManager
-        sensorManager!!.registerListener(this, stepCountSensor, SensorManager.SENSOR_DELAY_NORMAL)
-        lightSensor = sensorManager!!.getDefaultSensor(Sensor.TYPE_LIGHT)
-        if (lightSensor == null) Toast.makeText(this, "No Light Sensor Found!", Toast.LENGTH_SHORT)
-            .show()
-
-        //센서 초기 설정
-        if (stepCountSensor != null) {
-            // 센서 속도 설정
-            // * 옵션
-            // - SENSOR_DELAY_NORMAL: 20,000 초 딜레이
-            // - SENSOR_DELAY_UI: 6,000 초 딜레이
-            // - SENSOR_DELAY_GAME: 20,000 초 딜레이
-            // - SENSOR_DELAY_FASTEST: 딜레이 없음
-            //
-            sensorManager!!.registerListener(
-                this,
-                stepCountSensor,
-                SensorManager.SENSOR_DELAY_FASTEST
-            )
-        }
-        */
 
 
 
@@ -193,7 +115,6 @@ class MainActivity : AppCompatActivity() {
             checkPackageNameThread = CheckPackageNameThread()
             checkPackageNameThread!!.start()
             */
-            getDb()
         }
 
         // 종료 버튼 이벤트
@@ -448,57 +369,6 @@ class MainActivity : AppCompatActivity() {
         private fun removeLocationListener() {
             if (::locationManager.isInitialized && ::myLocationListener.isInitialized) {
                 locationManager.removeUpdates(myLocationListener)
-            }
-        }
-    }
-
-    private fun getDb() {
-
-        recorder = MediaRecorder()
-        //외부 저장소 내 개별앱 공간에 저장하기
-        val fileName: String = Date().getTime().toString() + ".mp3"
-        val basePath =
-            Environment.getExternalStorageDirectory().absolutePath + "/Download/" + fileName //내장메모리 밑에 위치
-
-        outputPath =
-            Environment.getExternalStorageDirectory().absolutePath + "/Download/" + fileName //내장메모리 밑에 위치
-        recorder = MediaRecorder()
-        recorder?.setAudioSource((MediaRecorder.AudioSource.MIC))
-        recorder?.setOutputFormat((MediaRecorder.OutputFormat.MPEG_4))
-        recorder?.setAudioEncoder(MediaRecorder.AudioEncoder.AAC)
-        recorder?.setOutputFile(outputPath)
-        try {
-            recorder?.prepare() //초기화를 완료
-        } catch (e: IOException) {
-            return
-        }
-
-        System.out.println("데시벨 측정 시작")
-        recorder?.start() //녹음기를 시작
-        decibel = findViewById<View>(R.id.decibel) as TextView
-        decibel!!.movementMethod = ScrollingMovementMethod()
-        //isRecording = true
-        job = CoroutineScope(Dispatchers.Default).launch {
-            while (!onCall!!) {
-                delay(1000L) //1초에 한번씩 데시벨을 측정
-                val amplitude = recorder!!.maxAmplitude
-                val db = 20 * kotlin.math.log10(amplitude.toDouble()) //진폭 to 데시벨
-                //데시벨은 기준 값을 기준으로 결정되는 것이라 한다.
-                //그래서 기준값을 넣고싶다면 아래와 같이 기준값으로 나눠주면 된다.
-                //val db = 20 * kotlin.math.log10(amplitude.toDouble()/기준값)
-                //아무것도 안 넣는다면 우리가 흔히 생각하는 데시벨값이 된다. > https://www.joongang.co.kr/article/23615791#home
-                if (db < 0) {
-                    //진폭이 0 보다 크면 .. toDoSomething
-                    //진폭이 0이하이면 데시벨이 -무한대로 나옵니다.
-                }else{
-                    println("데시벨 : " + db + "\n")
-                    //recorder?.reset()
-                    //delay(5000L)
-
-                }
-                //recorder?.stop()
-                //onCall = false
-
             }
         }
     }

@@ -16,4 +16,6 @@ object MyApi {
     const val insertHeartRateInfo: String = "insertHeartRateInfo.php"
     const val insertLuxInfo: String = "insertLuxInfo.php"
     const val insertDbInfo: String = "insertDbInfo.php"
+    const val insertAppsInfo: String = "insertAppsInfo.php"
+    const val deleteAppsInfo: String = "deleteAppsInfo.php"
 }

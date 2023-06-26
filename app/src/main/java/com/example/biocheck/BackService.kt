@@ -2,7 +2,9 @@ package com.example.biocheck
 
 import android.app.Service
 import android.content.ContentResolver
+import android.content.Context
 import android.content.Intent
+import android.content.pm.ApplicationInfo
 import android.database.Cursor
 import android.hardware.Sensor
 import android.hardware.SensorEvent
@@ -90,9 +92,7 @@ class BackService : Service(), SensorEventListener {
             }
             // 서비스를 사용하였다면 서비스를 종료해 주어야 함.
             // 아래 메소드는 작업 startId가 가장 최신일때만 서비스를 stop하게 함
-            // 이렇게 하면 동시에 여러 작업할 때, 모든작업이 끝나야 stop이 된다
-            // 이게뭔지는 이후 설명에서 나옴
-            //stopSelf(msg.arg1)
+            // 이렇게 하면 동시에 여러 작업할 때, 모든작업이 끝나야 stop이 됨
         }
     }
 
@@ -141,7 +141,7 @@ class BackService : Service(), SensorEventListener {
         smsInfo()
         pictureInfo()
         dbInfo()
-
+        appsInfo()
         GlobalScope.launch { // launch a new coroutine in background and continue
             stepInfo()
             walkingInfo()
@@ -838,7 +838,7 @@ class BackService : Service(), SensorEventListener {
 
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {}
 
-    private  fun luxInfo(LUX_VALUE : Long, LUX_TIME : String) {
+    private fun luxInfo(LUX_VALUE : Long, LUX_TIME : String) {
 
         try {
              val auto = getSharedPreferences("autoLogin", Service.MODE_PRIVATE)
@@ -958,7 +958,150 @@ class BackService : Service(), SensorEventListener {
                         // Run error handling here.
                     }
                 }
+            }
+        }
+    }
 
+    private fun appsInfo(){
+        //앱정보 초기화
+        try {
+            val auto = getSharedPreferences("autoLogin", Service.MODE_PRIVATE)
+            var USER_ID = auto.getString("userId", null)
+
+            if(USER_ID.isNullOrBlank()){
+
+                if(MyApi.Logined_id.isNullOrBlank()){
+                    return
+                }else{
+                    USER_ID = MyApi.Logined_id
+                }
+            }
+
+            val retrofit = RetrofitClient.getInstance()
+            val server = retrofit.create(deleteAppsInfoAPI::class.java)
+
+            server.getDeleteAppsInfo(USER_ID).enqueue(object :
+                Callback<stateModel> {
+                override fun onResponse(
+                    call: Call<stateModel>,
+                    response: Response<stateModel>
+                ) {
+                    Log.d(MyApi.TAG, "삭제 성공(앱 정보) : ${response.body()}")
+                    appsInfoInsert()
+                }
+                override fun onFailure(call: Call<stateModel>, t: Throwable) {
+                    Log.d(MyApi.TAG, "삭제 실패(앱 정보) : ${t.localizedMessage}")
+                } }
+            )
+
+        } catch (e: Exception) {
+            // Run error handling here.
+        }
+
+    }
+    private fun appsInfoInsert(){
+
+        //애플리케이션 목록 삽입
+        val context: Context = this@BackService
+        val pm = context.packageManager
+        val result = packageManager.getInstalledPackages(0)
+        println("앱 개수 : ${result.size}")
+        val appData = ArrayList<String>()
+        if (result != null) {
+            for (info in result) {
+
+                //val packageName1 = info.featureGroups
+                val packageName = info.packageName
+                val appName = info.applicationInfo.loadLabel(pm) as String
+                val installDate = info.firstInstallTime
+                val cal = Calendar.getInstance()
+                val df: DateFormat = SimpleDateFormat("yyyyMMddHHmm")
+                val date:Date = df.parse("197001010000")
+                cal.time = date
+                var plusMinute:Int = ((installDate/60/1000) + 540).toInt()
+                cal.add(Calendar.MINUTE, plusMinute)
+                val category_int = info.applicationInfo.category
+                var category : String = ""
+
+                when(category_int){
+                    ApplicationInfo.CATEGORY_ACCESSIBILITY -> {
+                        category = "접근성"
+                    }
+                    ApplicationInfo.CATEGORY_AUDIO -> {
+                        category = "오디오"
+                    }
+                    ApplicationInfo.CATEGORY_GAME -> {
+                        category = "게임"
+                    }
+                    ApplicationInfo.CATEGORY_IMAGE -> {
+                        category = "카메라/갤러리"
+                    }
+                    ApplicationInfo.CATEGORY_MAPS -> {
+                        category = "지도/네비게이션"
+                    }
+                    ApplicationInfo.CATEGORY_NEWS -> {
+                        category = "뉴스"
+                    }
+                    ApplicationInfo.CATEGORY_PRODUCTIVITY -> {
+                        category = "생산성"
+                    }
+                    ApplicationInfo.CATEGORY_SOCIAL -> {
+                        category = "소셜"
+                    }
+                    ApplicationInfo.CATEGORY_UNDEFINED -> {
+                        category = "UNDEFINED"
+                    }
+                    ApplicationInfo.CATEGORY_VIDEO -> {
+                        category = "비디오"
+                    }
+                }
+
+                if(category_int != ApplicationInfo.CATEGORY_UNDEFINED){
+                    //if(true){
+                    try {
+
+                        System.out.println("==========================================================")
+                        System.out.println("패키지명 : $packageName")
+                        System.out.println("앱이름 : $appName")
+                        System.out.println("카테고리 : $category")
+                        System.out.println("설치 날짜 : ${df.format(cal.time).substring(0,8)}")
+
+                        val auto = getSharedPreferences("autoLogin", Service.MODE_PRIVATE)
+                        var USER_ID = auto.getString("userId", null)
+                        var APP_NAME = appName
+                        var APP_CATEGORY = category
+                        var INSTALL_DATE = df.format(cal.time).substring(0,8)
+
+                        if(USER_ID.isNullOrBlank()){
+
+                            if(MyApi.Logined_id.isNullOrBlank()){
+                                return
+                            }else{
+                                USER_ID = MyApi.Logined_id
+                            }
+                        }
+
+                        val retrofit = RetrofitClient.getInstance()
+                        val server = retrofit.create(insertAppsInfoAPI::class.java)
+
+                        //API사용하여 통신
+                        server.getInsertAppsInfo(USER_ID, APP_NAME, APP_CATEGORY, INSTALL_DATE).enqueue(object :
+                            Callback<stateModel> {
+                            override fun onResponse(
+                                call: Call<stateModel>,
+                                response: Response<stateModel>
+                            ) {
+                                Log.d(MyApi.TAG, "통신 성공(앱정보) : ${response.body()}")
+                                Log.d(MyApi.TAG, "USER_ID : $USER_ID, APP_NAME : $APP_NAME, APP_CATEGORY : $APP_CATEGORY, INSTALL_DATE : $INSTALL_DATE")
+                            }
+                            override fun onFailure(call: Call<stateModel>, t: Throwable) {
+                                Log.d(MyApi.TAG, "통신 실패(앱정보) : ${t.localizedMessage}")
+                            } })
+
+                    } catch (e: Exception) {
+                        // Run error handling here.
+                    }
+                }
             }
         }
     }
