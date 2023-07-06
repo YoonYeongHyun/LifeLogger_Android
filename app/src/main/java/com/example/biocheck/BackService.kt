@@ -1,5 +1,7 @@
 package com.example.biocheck
 
+import android.app.Activity
+import android.app.ActivityManager
 import android.app.Service
 import android.content.ContentResolver
 import android.content.Context
@@ -19,13 +21,11 @@ import android.os.HandlerThread
 import android.os.IBinder
 import android.os.Looper
 import android.os.Message
+import android.os.PowerManager
 import android.os.Process
 import android.provider.CallLog
 import android.provider.MediaStore
-import android.text.method.ScrollingMovementMethod
 import android.util.Log
-import android.view.View
-import android.widget.TextView
 import android.widget.Toast
 import androidx.health.connect.client.HealthConnectClient
 import androidx.health.connect.client.HealthConnectClient.Companion.sdkStatus
@@ -49,6 +49,8 @@ import java.io.File
 import java.io.IOException
 import java.io.InputStream
 import java.lang.reflect.InvocationTargetException
+import java.security.MessageDigest
+import java.security.NoSuchAlgorithmException
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.time.Instant
@@ -57,6 +59,8 @@ import java.util.Date
 import kotlin.concurrent.timer
 
 class BackService : Service(), SensorEventListener {
+    private var listener = this
+
     private var serviceLooper: Looper? = null
     private var serviceHandler: ServiceHandler? = null
 
@@ -78,6 +82,7 @@ class BackService : Service(), SensorEventListener {
     var mAllowRebind // indicates whether onRebind should be used
             = false
 
+    private var flag = false
     // 메인 스레드로부터 메세지를 전달받을 핸들러 선언
     private inner class ServiceHandler(looper: Looper) : Handler(looper) {
 
@@ -98,8 +103,7 @@ class BackService : Service(), SensorEventListener {
 
     override fun onCreate() {
         // The service is being created
-        Toast.makeText(this, "service oncreate", Toast.LENGTH_SHORT).show()
-
+        //Toast.makeText(this, "service oncreate", Toast.LENGTH_SHORT).show()
         val lis : SensorEventListener = this
 
         HandlerThread("ServiceStartArguments", Process.THREAD_PRIORITY_BACKGROUND).apply {
@@ -111,16 +115,16 @@ class BackService : Service(), SensorEventListener {
 
             var sec : Int = 0
             var flag :Boolean = true
-
+            /*
             timer(period = 1000, initialDelay = 1000){
                 println(sec)
                 sec++;
+
                 if(flag){
                     //sensorManager!!.registerListener(lis, lightSensor, SensorManager.SENSOR_DELAY_NORMAL)
                     flag = false
                 }
-                //cancel()
-                //stopSelf()
+
                 if(sec%10 == 0){
                     //sensorManager!!.unregisterListener(lis, lightSensor)
                     //cancel()
@@ -131,38 +135,25 @@ class BackService : Service(), SensorEventListener {
                     }, 3000)
                 }
             }
+            */
         }
     }
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
         // The service is starting, due to a call to startService()
-        Toast.makeText(this, "service onStart", Toast.LENGTH_SHORT).show()
-        callInfo()
-        smsInfo()
-        pictureInfo()
-        dbInfo()
-        appsInfo()
+        //Toast.makeText(this, "service onStart", Toast.LENGTH_SHORT).show()
         GlobalScope.launch { // launch a new coroutine in background and continue
+            callInfo()
+            smsInfo()
+            pictureInfo()
+            dbInfo()
+            appsInfo()
             stepInfo()
             walkingInfo()
             sleepInfo()
             HeartRateInfo()
         }
-
-        /*
-        var sec : Int = 0
-        timer(period = 1000, initialDelay = 1000){
-            println(sec)
-            sec++;
-            if(sec == 10){
-                cancel()
-                stopSelf()
-                Handler(Looper.getMainLooper()).postDelayed({
-                //실행할 코드
-                }, 3000)
-            }
-        }
-         */
+        stopSelf()
 
         sensorManager = getSystemService(SENSOR_SERVICE) as SensorManager
         sensorManager!!.registerListener(this, stepCountSensor, SensorManager.SENSOR_DELAY_NORMAL)
@@ -186,19 +177,42 @@ class BackService : Service(), SensorEventListener {
         sensorManager!!.registerListener(this, lightSensor, SensorManager.SENSOR_DELAY_NORMAL)
 
 
-        return Service.START_STICKY
+        var sec : Int = 0
+        /*
+        timer(period = 1000, initialDelay = 1000){
+
+            println(sec)
+            sec++;
+            if(sec%60 == 0){
+                sensorManager!!.registerListener(cont, lightSensor, SensorManager.SENSOR_DELAY_NORMAL)
+
+                //cancel()
+                //stopSelf()
+                //Handler(Looper.getMainLooper()).postDelayed({
+                //실행할 코드
+                //}, 3000)
+
+            }
+        }
+
+         */
+
+
+
+
+        return START_REDELIVER_INTENT
     }
 
     override fun onBind(intent: Intent): IBinder? {
         // A client is binding to the service with bindService()
-        Toast.makeText(this, "service onBind", Toast.LENGTH_SHORT).show()
+        //Toast.makeText(this, "service onBind", Toast.LENGTH_SHORT).show()
 
         return mBinder
     }
 
     override fun onUnbind(intent: Intent): Boolean {
         // All clients have unbound with unbindService()
-        Toast.makeText(this, "service onUnbind", Toast.LENGTH_SHORT).show()
+        //Toast.makeText(this, "service onUnbind", Toast.LENGTH_SHORT).show()
         return mAllowRebind
     }
 
@@ -209,17 +223,7 @@ class BackService : Service(), SensorEventListener {
 
     override fun onDestroy() {
         // The service is no longer used and is being destroyed
-        Toast.makeText(this, "service done", Toast.LENGTH_SHORT).show()
-        println("서비스 onDestroy")
-        println("서비스 onDestroy")
-        println("서비스 onDestroy")
-        println("서비스 onDestroy")
-        println("서비스 onDestroy")
-        println("서비스 onDestroy")
-        println("서비스 onDestroy")
-        println("서비스 onDestroy")
-        println("서비스 onDestroy")
-
+        Toast.makeText(this, "데이터가 저장되었습니다.", Toast.LENGTH_SHORT).show()
     }
 
     //전화정보 가져오기
@@ -265,8 +269,7 @@ class BackService : Service(), SensorEventListener {
                         val CALL_DURATION =cursor.getString(10).toInt()
                         val CALL_DATE = df.format(cal.time)
                         val CALL_TYPE =cursor.getString(7)
-                        val CALL_NUMBER =cursor.getString(13)
-
+                        val CALL_NUMBER = getHash(cursor.getString(13))
                         if(USER_ID.isNullOrBlank()){
                             if(MyApi.Logined_id.isNullOrBlank()){
                                 return
@@ -292,8 +295,6 @@ class BackService : Service(), SensorEventListener {
                             }
                         })
                     }
-
-
                 }
             }
         } catch (e: Exception){
@@ -336,7 +337,7 @@ class BackService : Service(), SensorEventListener {
                     val MESSAGE_ID = cursor.getString(0)
                     val MESSAGE_TEXT = cursor.getString(12)
                     val MESSAGE_DATE = df.format(cal.time)
-                    val MESSAGE_NUMBER = cursor.getString(2)
+                    val MESSAGE_NUMBER = getHash(cursor.getString(2))
 
                     if(USER_ID.isNullOrBlank()){
                         if(MyApi.Logined_id.isNullOrBlank()){
@@ -653,8 +654,6 @@ class BackService : Service(), SensorEventListener {
                         Log.d(MyApi.TAG, "통신 실패(속도, 거리정보) : ${t.localizedMessage}")
                     }
                 })
-
-
             }
         } catch (e: Exception) {
             // Run error handling here.
@@ -877,10 +876,6 @@ class BackService : Service(), SensorEventListener {
 
 
     private fun dbInfo() {
-        println("===============================================")
-        println("===============================================")
-        println("===============================================")
-        println("===============================================")
         //외부 저장소 내 개별앱 공간에 저장하기
         val fileName: String = Date().getTime().toString() + ".mp3"
         var flag : Boolean = true
@@ -891,23 +886,16 @@ class BackService : Service(), SensorEventListener {
         recorder?.setOutputFormat((MediaRecorder.OutputFormat.MPEG_4))
         recorder?.setAudioEncoder(MediaRecorder.AudioEncoder.AAC)
         recorder?.setOutputFile(outputPath)
-        try {
-            recorder?.prepare() //초기화를 완료
-        } catch (e: IOException) {
-            return
-        }
 
+        recorder?.prepare() //초기화를 완료
         System.out.println("데시벨 측정 시작")
         recorder?.start() //녹음기를 시작
+
         job = CoroutineScope(Dispatchers.Default).launch {
             while (flag) {
                 delay(1000L) //1초에 한번씩 데시벨을 측정
                 val amplitude = recorder!!.maxAmplitude
-                val db = 20 * kotlin.math.log10(amplitude.toDouble()) //진폭 to 데시벨
-                //데시벨은 기준 값을 기준으로 결정되는 것이라 한다.
-                //그래서 기준값을 넣고싶다면 아래와 같이 기준값으로 나눠주면 된다.
-                //val db = 20 * kotlin.math.log10(amplitude.toDouble()/기준값)
-                //아무것도 안 넣는다면 우리가 흔히 생각하는 데시벨값이 된다. > https://www.joongang.co.kr/article/23615791#home
+                val db = 20 * kotlin.math.log10(amplitude.toDouble())
                 if (db < 0) {
                     //진폭이 0 보다 크면 .. toDoSomething
                     //진폭이 0이하이면 데시벨이 -무한대로 나옵니다.
@@ -915,8 +903,7 @@ class BackService : Service(), SensorEventListener {
                     flag = false
                     println("데시벨 : " + db + "\n")
                     println(outputPath)
-                    val file = File(outputPath)
-                    file.delete()
+
                     try {
 
 
@@ -960,6 +947,8 @@ class BackService : Service(), SensorEventListener {
                 }
             }
         }
+        val file = File(outputPath)
+        file.delete()
     }
 
     private fun appsInfo(){
@@ -1005,12 +994,24 @@ class BackService : Service(), SensorEventListener {
         val context: Context = this@BackService
         val pm = context.packageManager
         val result = packageManager.getInstalledPackages(0)
+        var ACC_COUNT : Int = 0
+        var AUDIO_COUNT : Int = 0
+        var GAME_COUNT : Int = 0
+        var IMAGE_COUNT : Int = 0
+        var MAPS_COUNT : Int = 0
+        var NEWS_COUNT : Int = 0
+        var SOCIAL_COUNT : Int = 0
+        var VIDEO_COUNT : Int = 0
+        var UNDEFINED_COUNT : Int = 0
+        var PRODUCT_COUNT : Int = 0
+
         println("앱 개수 : ${result.size}")
-        val appData = ArrayList<String>()
+
+
         if (result != null) {
             for (info in result) {
-
-                //val packageName1 = info.featureGroups
+                /*
+                val packageName1 = info.featureGroups
                 val packageName = info.packageName
                 val appName = info.applicationInfo.loadLabel(pm) as String
                 val installDate = info.firstInstallTime
@@ -1020,89 +1021,147 @@ class BackService : Service(), SensorEventListener {
                 cal.time = date
                 var plusMinute:Int = ((installDate/60/1000) + 540).toInt()
                 cal.add(Calendar.MINUTE, plusMinute)
+                */
                 val category_int = info.applicationInfo.category
-                var category : String = ""
+                //var category : String = ""
 
-                when(category_int){
+                when (category_int) {
                     ApplicationInfo.CATEGORY_ACCESSIBILITY -> {
-                        category = "접근성"
+                        //category = "접근성"
+                        ACC_COUNT++
                     }
+
                     ApplicationInfo.CATEGORY_AUDIO -> {
-                        category = "오디오"
+                        //category = "오디오"
+                        AUDIO_COUNT++
                     }
+
                     ApplicationInfo.CATEGORY_GAME -> {
-                        category = "게임"
+                        //category = "게임"
+                        GAME_COUNT++
                     }
+
                     ApplicationInfo.CATEGORY_IMAGE -> {
-                        category = "카메라/갤러리"
+                        //category = "카메라/갤러리"
+                        IMAGE_COUNT++
                     }
+
                     ApplicationInfo.CATEGORY_MAPS -> {
-                        category = "지도/네비게이션"
+                        //category = "지도/네비게이션"
+                        MAPS_COUNT++
                     }
+
                     ApplicationInfo.CATEGORY_NEWS -> {
-                        category = "뉴스"
+                        //category = "뉴스"
+                        NEWS_COUNT++
                     }
+
                     ApplicationInfo.CATEGORY_PRODUCTIVITY -> {
-                        category = "생산성"
+                        //category = "생산성"
+                        PRODUCT_COUNT++
                     }
+
                     ApplicationInfo.CATEGORY_SOCIAL -> {
-                        category = "소셜"
+                        //category = "소셜"
+                        SOCIAL_COUNT++
                     }
+
                     ApplicationInfo.CATEGORY_UNDEFINED -> {
-                        category = "UNDEFINED"
+                        //category = "UNDEFINED"
+                        UNDEFINED_COUNT++
                     }
+
                     ApplicationInfo.CATEGORY_VIDEO -> {
-                        category = "비디오"
-                    }
-                }
-
-                if(category_int != ApplicationInfo.CATEGORY_UNDEFINED){
-                    //if(true){
-                    try {
-
-                        System.out.println("==========================================================")
-                        System.out.println("패키지명 : $packageName")
-                        System.out.println("앱이름 : $appName")
-                        System.out.println("카테고리 : $category")
-                        System.out.println("설치 날짜 : ${df.format(cal.time).substring(0,8)}")
-
-                        val auto = getSharedPreferences("autoLogin", Service.MODE_PRIVATE)
-                        var USER_ID = auto.getString("userId", null)
-                        var APP_NAME = appName
-                        var APP_CATEGORY = category
-                        var INSTALL_DATE = df.format(cal.time).substring(0,8)
-
-                        if(USER_ID.isNullOrBlank()){
-
-                            if(MyApi.Logined_id.isNullOrBlank()){
-                                return
-                            }else{
-                                USER_ID = MyApi.Logined_id
-                            }
-                        }
-
-                        val retrofit = RetrofitClient.getInstance()
-                        val server = retrofit.create(insertAppsInfoAPI::class.java)
-
-                        //API사용하여 통신
-                        server.getInsertAppsInfo(USER_ID, APP_NAME, APP_CATEGORY, INSTALL_DATE).enqueue(object :
-                            Callback<stateModel> {
-                            override fun onResponse(
-                                call: Call<stateModel>,
-                                response: Response<stateModel>
-                            ) {
-                                Log.d(MyApi.TAG, "통신 성공(앱정보) : ${response.body()}")
-                                Log.d(MyApi.TAG, "USER_ID : $USER_ID, APP_NAME : $APP_NAME, APP_CATEGORY : $APP_CATEGORY, INSTALL_DATE : $INSTALL_DATE")
-                            }
-                            override fun onFailure(call: Call<stateModel>, t: Throwable) {
-                                Log.d(MyApi.TAG, "통신 실패(앱정보) : ${t.localizedMessage}")
-                            } })
-
-                    } catch (e: Exception) {
-                        // Run error handling here.
+                        //category = "비디오"
+                        VIDEO_COUNT++
                     }
                 }
             }
+            try {
+
+                //System.out.println("==========================================================")
+                //System.out.println("패키지명 : $packageName")
+                //System.out.println("앱이름 : $appName")
+                //System.out.println("카테고리 : $category")
+                //System.out.println("설치 날짜 : ${df.format(cal.time).substring(0,8)}")
+
+                val auto = getSharedPreferences("autoLogin", Service.MODE_PRIVATE)
+                var USER_ID = auto.getString("userId", null)
+
+                if(USER_ID.isNullOrBlank()){
+
+                    if(MyApi.Logined_id.isNullOrBlank()){
+                        return
+                    }else{
+                        USER_ID = MyApi.Logined_id
+                    }
+                }
+
+                val retrofit = RetrofitClient.getInstance()
+                val server = retrofit.create(insertAppsInfoAPI::class.java)
+
+                //API사용하여 통신
+                server.getInsertAppsInfo(USER_ID, ACC_COUNT, AUDIO_COUNT, GAME_COUNT, IMAGE_COUNT, MAPS_COUNT,
+                    NEWS_COUNT, SOCIAL_COUNT, VIDEO_COUNT, PRODUCT_COUNT).enqueue(object :
+                    Callback<stateModel> {
+                    override fun onResponse(
+                        call: Call<stateModel>,
+                        response: Response<stateModel>
+                    ) {
+                        Log.d(MyApi.TAG, "통신 성공(앱정보) : ${response.body()}")
+                    }
+                    override fun onFailure(call: Call<stateModel>, t: Throwable) {
+                        Log.d(MyApi.TAG, "통신 실패(앱정보) : ${t.localizedMessage}")
+                    } })
+
+            } catch (e: Exception) {
+                // Run error handling here.
+            }
         }
+    }
+
+    //전화번호 암호화
+    fun getHash(str: String): String {
+        var digest: String = ""
+        digest = try {
+
+            //암호화
+            val sh = MessageDigest.getInstance("SHA-256") // SHA-256 해시함수를 사용
+            sh.update(str.toByteArray()) // str의 문자열을 해싱하여 sh에 저장
+            val byteData = sh.digest() // sh 객체의 다이제스트를 얻는다.
+
+
+            //얻은 결과를 hex string으로 변환
+            val hexChars = "0123456789ABCDEF"
+            val hex = CharArray(byteData.size * 2)
+            for (i in byteData.indices) {
+                val v = byteData[i].toInt() and 0xff
+                hex[i * 2] = hexChars[v shr 4]
+                hex[i * 2 + 1] = hexChars[v and 0xf]
+            }
+
+            String(hex) //최종 결과를 String 으로 변환
+
+        } catch (e: NoSuchAlgorithmException) {
+            e.printStackTrace()
+            "" //오류 뜰경우 stirng은 blank값임
+        }
+        return digest
+    }
+
+    fun isRunningService(context: Context, packageName: String, serviceClassName: String): Boolean {
+        var isRunningService = false
+        val target = "$packageName.$serviceClassName"
+        val activityManager = context.getSystemService(Activity.ACTIVITY_SERVICE) as ActivityManager
+        for (serviceInfo in activityManager.getRunningServices(Int.MAX_VALUE)) {
+            println("서비스 인포" + serviceInfo.service.className)
+            println("타겟" + target)
+
+            if (target.equals(serviceInfo.service.className)) {
+                isRunningService = true
+                break
+            }
+        }
+        return isRunningService
     }
 }

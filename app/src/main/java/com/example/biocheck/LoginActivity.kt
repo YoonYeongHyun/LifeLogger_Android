@@ -45,8 +45,23 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        //헬스커넥터 권한
+        //헬스커넥트 삼성헬스 앱설치유무에 따라 실행
+        val HealthConnect = "com.google.android.apps.healthdata"
+        val SamsungHealth = "com.sec.android.app.shealth"
+        val installApp1 = packageManager.getLaunchIntentForPackage(HealthConnect)
+        val installApp2 = packageManager.getLaunchIntentForPackage(SamsungHealth)
+        if (installApp1 == null) {
+            val intent = Intent(Intent.ACTION_VIEW)
+            intent.data = (Uri.parse("market://details?id=$HealthConnect"))
+            startActivity(intent)
+        }
+        if (installApp2 == null) {
+            val intent = Intent(Intent.ACTION_VIEW)
+            intent.data = (Uri.parse("market://details?id=$SamsungHealth"))
+            startActivity(intent)
+        }
 
+        //헬스커넥터 부여
         val requestPermission =
             this.registerForActivityResult(
                 PermissionController.createRequestPermissionResultContract()
@@ -54,11 +69,9 @@ class LoginActivity : AppCompatActivity() {
                 if (
                     grantedPermissions.contains(HealthPermission.getReadPermission(StepsRecord::class))
                 ) {
-                    println("uuuuuuuuuuuuuuuuuuuuuu")
                     println(grantedPermissions.contains(HealthPermission.getReadPermission(StepsRecord::class)))
                     // Read or process steps related health records.
                 } else {
-                    println("dddddddddddddddddddd")
                     println(grantedPermissions.contains(HealthPermission.getReadPermission(StepsRecord::class)))
 
                     // user denied permission
@@ -74,25 +87,7 @@ class LoginActivity : AppCompatActivity() {
             HealthPermission.getReadPermission(DistanceRecord::class),
         ))
 
-
-        /*
-        val permissionController :PermissionController
-        val job1 = CoroutineScope(Dispatchers.Main).launch {
-            val grantedPermissions = PermissionController.getGrantedPermissions()
-            if (grantedPermissions.contains(HealthPermission.getReadPermission(StepsRecord::class))) {
-                // Read or process steps related health records.
-            } else {
-                // user denied permission
-            }
-        }
-        */
-
-
-
-
-
-        //자동 로그인 동작
-
+        //아이디 비밀번호 자동 입력
         val loginId: EditText = findViewById(R.id.login_id)
         val loginPassword: EditText = findViewById(R.id.login_password)
         val autoCheck: CheckBox = findViewById(R.id.auto_check)
@@ -106,7 +101,7 @@ class LoginActivity : AppCompatActivity() {
             autoCheck.isChecked = true
             loginId.setText(userId)
             loginPassword.setText(passwordNo)
-
+            loginFunction()
         }
 
         //수집 관련 퍼미션 확인
@@ -169,16 +164,13 @@ class LoginActivity : AppCompatActivity() {
                     Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACTIVITY_RECOGNITION,
                     Manifest.permission.RECEIVE_SMS, Manifest.permission.READ_SMS,
                     Manifest.permission.ACCESS_MEDIA_LOCATION, Manifest.permission.READ_EXTERNAL_STORAGE,
-                    Manifest.permission.READ_MEDIA_IMAGES,Manifest.permission.RECEIVE_MMS,
+                    Manifest.permission.RECEIVE_MMS,Manifest.permission.READ_MEDIA_IMAGES,
 
                 ),
                 1
             )
-        }else{
-            if(userId != null && passwordNo != null) {
-                //loginFunction()
-            }
         }
+
         if (!checkPermission()) {
             val permissionIntent = Intent(
                 Settings.ACTION_USAGE_ACCESS_SETTINGS, Uri.parse(
@@ -193,7 +185,6 @@ class LoginActivity : AppCompatActivity() {
 
         joinButton.setOnClickListener {
             val intent = Intent(applicationContext, JoinActivity::class.java)
-            intent.putExtra("message", "액티비티가 이동됐다!")
             startActivity(intent)
         }
 
@@ -281,5 +272,6 @@ class LoginActivity : AppCompatActivity() {
             finishAffinity()
         }
     }
+
 
 }

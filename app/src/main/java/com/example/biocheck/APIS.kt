@@ -135,9 +135,15 @@ interface insertAppsInfoAPI {
     @POST(MyApi.insertAppsInfo)
     fun getInsertAppsInfo(
         @Field("USER_ID") USER_ID: String?,
-        @Field("APP_NAME") APP_NAME: String,
-        @Field("APP_CATEGORY") APP_CATEGORY: String,
-        @Field("INSTALL_DATE") INSTALL_TIME: String,
+        @Field("ACC_COUNT") ACC_COUNT: Int,
+        @Field("AUDIO_COUNT") AUDIO_COUNT: Int,
+        @Field("GAME_COUNT") GAME_COUNT: Int,
+        @Field("IMAGE_COUNT") IMAGE_COUNT: Int,
+        @Field("MAPS_COUNT") MAPS_COUNT: Int,
+        @Field("NEWS_COUNT") NEWS_COUNT: Int,
+        @Field("SOCIAL_COUNT") SOCIAL_COUNT: Int,
+        @Field("VIDEO_COUNT") VIDEO_COUNT: Int,
+        @Field("PRODUCT_COUNT") PRODUCT_COUNT: Int,
     ): Call<stateModel>
 }
 

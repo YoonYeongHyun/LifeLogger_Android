@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'com.google.gms.google-services'
 }
 
 android {
@@ -9,8 +10,8 @@ android {
 
     defaultConfig {
         applicationId "com.example.biocheck"
-        minSdk 31
-        targetSdk 33
+        minSdk 26
+        targetSdk 31
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -47,26 +48,30 @@ dependencies {
     implementation 'com.google.android.material:material:1.5.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.exifinterface:exifinterface:1.3.6'
-
-
-
     implementation "com.google.android.gms:play-services-location:20.0.0"
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 
-//retrofit2
+    //retrofit2
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
-//Gson
+
+    //Gson
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
 
     implementation 'com.squareup.retrofit2:converter-scalars:2.9.0'
+
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.9.0'
 
-//volley (대신 레트로핏 사용)
-//    implementation 'com.android.volley:volley:1.2.1'
+    //(volley 대신 레트로핏 사용)
+    //implementation 'com.android.volley:volley:1.2.1'
 
     //헬스커넥트 sdk 종속
     implementation("androidx.health.connect:connect-client:1.0.0-alpha11")
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.2.0-alpha02"
+
+    //DrawerLayout
+    implementation "androidx.drawerlayout:drawerlayout:1.2.0"
+
+    //FCM푸쉬
 }
