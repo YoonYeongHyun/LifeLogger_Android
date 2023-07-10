@@ -15,6 +15,7 @@ import android.hardware.SensorManager
 import android.media.ExifInterface
 import android.media.MediaRecorder
 import android.net.Uri
+import android.os.Build
 import android.os.Environment
 import android.os.Handler
 import android.os.HandlerThread
@@ -27,6 +28,7 @@ import android.provider.CallLog
 import android.provider.MediaStore
 import android.util.Log
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.health.connect.client.HealthConnectClient
 import androidx.health.connect.client.HealthConnectClient.Companion.sdkStatus
 import androidx.health.connect.client.records.DistanceRecord
@@ -60,7 +62,7 @@ import kotlin.concurrent.timer
 
 class BackService : Service(), SensorEventListener {
     private var listener = this
-
+    private var context = this
     private var serviceLooper: Looper? = null
     private var serviceHandler: ServiceHandler? = null
 
@@ -143,16 +145,18 @@ class BackService : Service(), SensorEventListener {
         // The service is starting, due to a call to startService()
         //Toast.makeText(this, "service onStart", Toast.LENGTH_SHORT).show()
         GlobalScope.launch { // launch a new coroutine in background and continue
+
+            dbInfo()
             callInfo()
             smsInfo()
             pictureInfo()
-            dbInfo()
             appsInfo()
             stepInfo()
             walkingInfo()
             sleepInfo()
             HeartRateInfo()
         }
+
         stopSelf()
 
         sensorManager = getSystemService(SENSOR_SERVICE) as SensorManager
@@ -878,29 +882,33 @@ class BackService : Service(), SensorEventListener {
     private fun dbInfo() {
         //외부 저장소 내 개별앱 공간에 저장하기
         val fileName: String = Date().getTime().toString() + ".mp3"
-        var flag : Boolean = true
+        var db_flag : Boolean = true
         outputPath =
             Environment.getExternalStorageDirectory().absolutePath + "/Download/" + fileName //내장메모리 밑에 위치
-        recorder = MediaRecorder()
+
+        recorder = MediaRecorder(context)
         recorder?.setAudioSource((MediaRecorder.AudioSource.MIC))
-        recorder?.setOutputFormat((MediaRecorder.OutputFormat.MPEG_4))
-        recorder?.setAudioEncoder(MediaRecorder.AudioEncoder.AAC)
+        recorder?.setOutputFormat((MediaRecorder.OutputFormat.THREE_GPP))
+        recorder?.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB)
         recorder?.setOutputFile(outputPath)
 
-        recorder?.prepare() //초기화를 완료
-        System.out.println("데시벨 측정 시작")
-        recorder?.start() //녹음기를 시작
-
         job = CoroutineScope(Dispatchers.Default).launch {
-            while (flag) {
+
+            recorder?.prepare() //초기화를 완료
+            System.out.println("데시벨 측정 시작")
+            recorder?.start() //녹음기를 시작
+            System.out.println("녹음기를 시작")
+            while (db_flag) {
                 delay(1000L) //1초에 한번씩 데시벨을 측정
-                val amplitude = recorder!!.maxAmplitude
+                val amplitude: Long = recorder!!.maxAmplitude.toLong()
                 val db = 20 * kotlin.math.log10(amplitude.toDouble())
+                System.out.println(amplitude)
+                System.out.println("db : $db")
                 if (db < 0) {
                     //진폭이 0 보다 크면 .. toDoSomething
                     //진폭이 0이하이면 데시벨이 -무한대로 나옵니다.
                 }else{
-                    flag = false
+                    db_flag = false
                     println("데시벨 : " + db + "\n")
                     println(outputPath)
 
@@ -909,7 +917,7 @@ class BackService : Service(), SensorEventListener {
 
                         val auto = getSharedPreferences("autoLogin", Service.MODE_PRIVATE)
                         var USER_ID = auto.getString("userId", null)
-                        var DB_VALUE : Int = db.toInt()
+                        var DB_VALUE  = db.toInt()
                         var date:Date = Date()
                         val df: DateFormat = SimpleDateFormat("yyyyMMddHHmm")
 
