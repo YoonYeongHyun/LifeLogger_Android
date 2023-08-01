@@ -1,4 +1,4 @@
-package com.example.biocheck
+package com.example.lifeLogger
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName

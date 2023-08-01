@@ -1,15 +1,15 @@
 {
   "project_info": {
     "project_number": "270983779415",
-    "project_id": "biocheck-619f9",
-    "storage_bucket": "biocheck-619f9.appspot.com"
+    "project_id": "lifeLogger-619f9",
+    "storage_bucket": "lifeLogger-619f9.appspot.com"
   },
   "client": [
     {
       "client_info": {
         "mobilesdk_app_id": "1:270983779415:android:205cb68205fb879180ff12",
         "android_client_info": {
-          "package_name": "com.example.biocheck"
+          "package_name": "com.example.lifeLogger"
         }
       },
       "oauth_client": [

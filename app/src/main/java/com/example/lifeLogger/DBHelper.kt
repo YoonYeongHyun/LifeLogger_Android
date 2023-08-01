@@ -1,4 +1,4 @@
-package com.example.biocheck
+package com.example.lifeLogger
 
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase

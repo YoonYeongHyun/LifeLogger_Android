@@ -1,4 +1,4 @@
-package com.example.biocheck
+package com.example.lifeLogger
 
 import android.Manifest
 import android.app.Activity
@@ -19,7 +19,6 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.health.connect.client.PermissionController
 import androidx.health.connect.client.permission.HealthPermission
-import androidx.health.connect.client.records.BloodPressureRecord
 import androidx.health.connect.client.records.DistanceRecord
 import androidx.health.connect.client.records.ElevationGainedRecord
 import androidx.health.connect.client.records.HeartRateRecord
@@ -27,10 +26,13 @@ import androidx.health.connect.client.records.SleepSessionRecord
 import androidx.health.connect.client.records.SleepStageRecord
 import androidx.health.connect.client.records.SpeedRecord
 import androidx.health.connect.client.records.StepsRecord
-import androidx.health.platform.client.permission.Permission
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.util.Date
+import kotlin.reflect.typeOf
 
 
 class LoginActivity : AppCompatActivity() {
@@ -229,9 +231,9 @@ class LoginActivity : AppCompatActivity() {
                         autoLoginEdit.commit()
                     }
                     Toast.makeText(context, "로그인 되었습니다.", Toast.LENGTH_SHORT).show()
-                    val intent = Intent(applicationContext, MainActivity::class.java)
                     MyApi.Logined_id = USER_ID;
-                    startActivity(intent)
+                    checkTodayState()
+
                 }else{
                     Toast.makeText(context, "${response.body()?.MESSAGE}", Toast.LENGTH_SHORT).show()
                 }
@@ -242,6 +244,46 @@ class LoginActivity : AppCompatActivity() {
         })
     }
 
+    private fun checkTodayState(){
+
+        print(MyApi.Logined_id)
+
+        var date: Date = Date()
+        val df: DateFormat = SimpleDateFormat("yyyyMMdd")
+
+
+        val USER_ID = MyApi.Logined_id
+        val STATE_DATE: String = df.format(date)
+        Log.d(MyApi.TAG, "USER_ID $USER_ID")
+        Log.d(MyApi.TAG, "STATE_DATE $STATE_DATE")
+
+        val retrofit = RetrofitClient.getInstance()
+        val server = retrofit.create(SelectTodayStateAPI::class.java)
+
+        //API사용하여 통신
+        server.getSelectTodayState(USER_ID, STATE_DATE).enqueue(object :
+            Callback<stateModel> {
+            override fun onResponse(
+                call: Call<stateModel>,
+                response: Response<stateModel>
+            ) {
+                Log.d(MyApi.TAG, "통신 성공 : ${response.body()}")
+
+                if(response.body()?.STATE.equals("0001")){
+                    println(response.body()?.MESSAGE)
+                    val intent = Intent(applicationContext, MainActivity::class.java)
+                    startActivity(intent)
+                }else{
+                    val intent = Intent(applicationContext, TodayStateActivity::class.java)
+                    startActivity(intent)
+                }
+            }
+            override fun onFailure(call: Call<stateModel>, t: Throwable) {
+                Log.d(MyApi.TAG, "통신 실패 : ${t.localizedMessage}")
+            }
+        })
+
+    }
     // 패키지 사용상태 확인 권한 체크
     private fun checkPermission(): Boolean {
         var granted = false

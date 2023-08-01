@@ -1,4 +1,4 @@
-package com.example.biocheck
+package com.example.lifeLogger
 
 //static 변수를 담아놓은 클래스
 object MyApi {
@@ -18,4 +18,6 @@ object MyApi {
     const val insertDbInfo: String = "insertDbInfo.php"
     const val insertAppsInfo: String = "insertAppsInfo.php"
     const val deleteAppsInfo: String = "deleteAppsInfo.php"
+    const val selectTodayState: String = "selectTodayState.php"
+
 }

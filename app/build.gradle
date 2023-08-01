@@ -5,12 +5,12 @@ plugins {
 }
 
 android {
-    namespace 'com.example.biocheck'
+    namespace 'com.example.lifeLogger'
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.example.biocheck"
-        minSdk 31
+        applicationId "com.example.lifeLogger"
+        minSdk 26
         targetSdk 31
         versionCode 1
         versionName "1.0"

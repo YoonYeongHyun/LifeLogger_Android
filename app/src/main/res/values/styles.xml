@@ -18,4 +18,14 @@
     <style name="urgentButton" parent="Widget.AppCompat.Button.Colored">
         <item name="android:colorPrimaryDark">@color/colorPrimaryDark</item>
     </style>
+
+
+    <!-- 로그인 창 스타일 -->
+    <style name="TextStyle1">
+        <item name="android:background">@android:color/white</item>
+
+    </style>
+
+
+
 </resources>

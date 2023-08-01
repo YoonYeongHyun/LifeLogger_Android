@@ -1,4 +1,4 @@
-package com.example.biocheck
+package com.example.lifeLogger
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,7 +7,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.biocheck.MyApi.TAG
+import com.example.lifeLogger.MyApi.TAG
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

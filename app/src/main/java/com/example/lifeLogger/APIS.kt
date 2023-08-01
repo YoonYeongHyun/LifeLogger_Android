@@ -1,4 +1,4 @@
-package com.example.biocheck
+package com.example.lifeLogger
 
 import retrofit2.Call
 import retrofit2.http.Field
@@ -152,5 +152,15 @@ interface deleteAppsInfoAPI {
     @POST(MyApi.deleteAppsInfo)
     fun getDeleteAppsInfo(
         @Field("USER_ID") USER_ID: String?,
+    ): Call<stateModel>
+}
+
+
+interface SelectTodayStateAPI {
+    @FormUrlEncoded
+    @POST(MyApi.selectTodayState)
+    fun getSelectTodayState(
+        @Field("USER_ID") USER_ID: String?,
+        @Field("STATE_DATE") STATE_DATE: String?,
     ): Call<stateModel>
 }

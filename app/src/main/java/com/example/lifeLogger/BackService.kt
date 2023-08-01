@@ -1,4 +1,4 @@
-package com.example.biocheck
+package com.example.lifeLogger
 
 import android.app.Activity
 import android.app.ActivityManager
@@ -15,20 +15,17 @@ import android.hardware.SensorManager
 import android.media.ExifInterface
 import android.media.MediaRecorder
 import android.net.Uri
-import android.os.Build
 import android.os.Environment
 import android.os.Handler
 import android.os.HandlerThread
 import android.os.IBinder
 import android.os.Looper
 import android.os.Message
-import android.os.PowerManager
 import android.os.Process
 import android.provider.CallLog
 import android.provider.MediaStore
 import android.util.Log
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.health.connect.client.HealthConnectClient
 import androidx.health.connect.client.HealthConnectClient.Companion.sdkStatus
 import androidx.health.connect.client.records.DistanceRecord
@@ -48,7 +45,6 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.File
-import java.io.IOException
 import java.io.InputStream
 import java.lang.reflect.InvocationTargetException
 import java.security.MessageDigest
@@ -58,7 +54,6 @@ import java.text.SimpleDateFormat
 import java.time.Instant
 import java.util.Calendar
 import java.util.Date
-import kotlin.concurrent.timer
 
 class BackService : Service(), SensorEventListener {
     private var listener = this
@@ -878,7 +873,6 @@ class BackService : Service(), SensorEventListener {
         }
     }
 
-
     private fun dbInfo() {
         //외부 저장소 내 개별앱 공간에 저장하기
         val fileName: String = Date().getTime().toString() + ".mp3"
@@ -886,7 +880,7 @@ class BackService : Service(), SensorEventListener {
         outputPath =
             Environment.getExternalStorageDirectory().absolutePath + "/Download/" + fileName //내장메모리 밑에 위치
 
-        recorder = MediaRecorder(context)
+        recorder = MediaRecorder()
         recorder?.setAudioSource((MediaRecorder.AudioSource.MIC))
         recorder?.setOutputFormat((MediaRecorder.OutputFormat.THREE_GPP))
         recorder?.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB)
@@ -911,7 +905,7 @@ class BackService : Service(), SensorEventListener {
                     db_flag = false
                     println("데시벨 : " + db + "\n")
                     println(outputPath)
-
+                    recorder?.stop()
                     try {
 
 
@@ -942,8 +936,10 @@ class BackService : Service(), SensorEventListener {
                                 call: Call<stateModel>,
                                 response: Response<stateModel>
                             ) {
+
                                 Log.d(MyApi.TAG, "통신 성공(데시벨) : ${response.body()}")
                                 Log.d(MyApi.TAG, "USER_ID : $USER_ID, DB_VALUE : $DB_VALUE, DB_TIME : $DB_TIME")
+
                             }
                             override fun onFailure(call: Call<stateModel>, t: Throwable) {
                                 Log.d(MyApi.TAG, "통신 실패(데시벨) : ${t.localizedMessage}")
@@ -956,6 +952,7 @@ class BackService : Service(), SensorEventListener {
             }
         }
         val file = File(outputPath)
+        println("녹음파일 삭제 경로 : ${outputPath}")
         file.delete()
     }
 
