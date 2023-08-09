@@ -1,25 +1,20 @@
 package com.example.lifeLogger
 
-import android.app.AlarmManager
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
-import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.os.Build
 import android.util.Log
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
 import com.example.lifeLogger.Constant.Companion.CHANNEL_ID_1
 import com.example.lifeLogger.Constant.Companion.CHANNEL_ID_2
 import com.example.lifeLogger.Constant.Companion.NOTIFICATION_ID
 import java.time.LocalDateTime
-import java.util.Date
 
 class MyAlarmReceiver: BroadcastReceiver()  {
     private lateinit var notificationManager: NotificationManager
@@ -85,6 +80,7 @@ class MyAlarmReceiver: BroadcastReceiver()  {
                 4. IMPORTANCE_MIN = 알림음 없고 상태줄 표시 X
                 */
             )
+
             if(NOTIFICATION_ID_NUM == 0){
                 notificationChannel = NotificationChannel(
                     CHANNEL_ID_1,
@@ -100,7 +96,7 @@ class MyAlarmReceiver: BroadcastReceiver()  {
             }
             notificationChannel.enableLights(true) // 불빛
             notificationChannel.lightColor = Color.RED // 색상
-            notificationChannel.vibrationPattern = (longArrayOf(50, 200)) //진동 패턴
+            notificationChannel.vibrationPattern = (longArrayOf(50, 300)) //진동 패턴
             notificationChannel.enableVibration(true) // 진동 여부
             notificationChannel.description = "앱 실행 알림 오전." // 채널 정보
             notificationManager.createNotificationChannel(
@@ -126,14 +122,13 @@ class MyAlarmReceiver: BroadcastReceiver()  {
         val dateAndtime: LocalDateTime = LocalDateTime.now()
         if(NOTIFICATION_ID_NUM == 0){
             val builder = NotificationCompat.Builder(context, CHANNEL_ID_1)
-                .setSmallIcon(R.drawable.baseline_assignment_ind_24) // 아이콘
+                .setSmallIcon(R.drawable.ic_launcher1_foreground) // 아이콘
                 .setContentTitle("앱을 실행해 주세요.$dateAndtime") // 제목
                 .setContentText("알림을 터치 하여 앱을 실행해 주세요.") // 내용
                 .setContentIntent(contentPendingIntent)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setAutoCancel(true)
                 .setDefaults(NotificationCompat.DEFAULT_ALL)
-
             notificationManager.notify(NOTIFICATION_ID, builder.build())
         }else if(NOTIFICATION_ID_NUM == 1){
             val builder = NotificationCompat.Builder(context, CHANNEL_ID_2)
@@ -144,7 +139,6 @@ class MyAlarmReceiver: BroadcastReceiver()  {
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setAutoCancel(true)
                 .setDefaults(NotificationCompat.DEFAULT_ALL)
-
             notificationManager.notify(NOTIFICATION_ID, builder.build())
         }
 

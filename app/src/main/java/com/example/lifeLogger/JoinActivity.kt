@@ -22,14 +22,6 @@ class JoinActivity : AppCompatActivity() {
         println("joinActivity")
         setContentView(R.layout.activity_join)
 
-        val cancelButton = findViewById<Button>(R.id.cancel_button)
-
-        cancelButton.setOnClickListener {
-            val intent = Intent(applicationContext, LoginActivity::class.java)
-            startActivity(intent)
-        }
-
-
         val joinButton = findViewById<Button>(R.id.join_button)
 
         joinButton.setOnClickListener {
@@ -38,7 +30,7 @@ class JoinActivity : AppCompatActivity() {
             val joinPassword:EditText = findViewById(R.id.join_password)
             val joinPwck:EditText = findViewById(R.id.join_pwck)
 
-            //유효성 검사
+            //유효성 검사 항목 나중에 추가 필요 (길이, 정규형 등등)
             if(joinName.text.contentEquals("") ||joinId.text.contentEquals("") ||
                 joinPassword.text.contentEquals("") ||joinPwck.text.contentEquals("")){
                 Toast.makeText(this, "모든 항목을 입력하세요.", Toast.LENGTH_SHORT).show()
@@ -63,27 +55,26 @@ class JoinActivity : AppCompatActivity() {
                     call: Call<userModel>,
                     response: Response<userModel>
                 ) {
-                    Log.d(TAG, "통신 성공 : ${response.body()}")
+                    Log.d(TAG, "통신 성공 : ${response}")
 
+                    println(USER_ID)
+                    println(USER_PWD)
+                    println(USER_NAME)
                     if(response.body()?.STATE.equals("0001")){
-                        Toast.makeText(context, "회원가입에 성공하셨습니다.", Toast.LENGTH_SHORT).show()
-                        val intent = Intent(applicationContext, LoginActivity::class.java)
-                        startActivity(intent)
+                        Toast.makeText(context, "다음 항목들을 모두 입력해 주세요.", Toast.LENGTH_SHORT).show()
+                        val afterJoinIntent = Intent(applicationContext, AfterJoinActivity::class.java)
+                        afterJoinIntent.putExtra("USER_NAME",USER_NAME)
+                        afterJoinIntent.putExtra("USER_ID",USER_ID)
+                        afterJoinIntent.putExtra("USER_PWD",USER_PWD)
+                        startActivity(afterJoinIntent)
                     }else{
                         Toast.makeText(context, "${response.body()?.MESSAGE}", Toast.LENGTH_SHORT).show()
                     }
-
-
                 }
                 override fun onFailure(call: Call<userModel>, t: Throwable) {
                     Log.d(TAG, "통신 실패 : ${t.localizedMessage}")
                 }
             })
-
-
-
-
         }
     }
-
 }

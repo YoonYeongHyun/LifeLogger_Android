@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:background="#EEEEEE"
+tools:context=".SurveyListFragment">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="설문 리스트"
+        android:paddingLeft="20dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:textColor="@color/colorPrimary"
+        android:background="@color/white"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <View
+        android:id="@+id/listview1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="60dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:background="@drawable/rectangle_14"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="10dp"></View>
+
+    <TextView
+        android:id="@+id/text_survey_title_first"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:text="초기 설문조사"
+        android:textColor="#000000"
+        android:textSize="24dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="30dp"
+        app:layout_constraintStart_toStartOf="@+id/listview1"
+        app:layout_constraintTop_toTopOf="@+id/listview1" />
+
+    <TextView
+        android:id="@+id/text_survey_subtitle_first"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginTop="10dp"
+        android:text="활성화 날짜 : "
+        android:textColor="#777777"
+        android:textSize="18dp"
+        app:layout_constraintStart_toStartOf="@+id/text_survey_title_first"
+        app:layout_constraintTop_toBottomOf="@+id/text_survey_title_first" />
+
+    <Button
+        android:id="@+id/survey_button_first"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="실시"
+        android:textSize="18sp"
+        android:textColor="@color/white"
+        android:background="@drawable/bg_gradient"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintBottom_toBottomOf="@+id/text_survey_subtitle_first"
+        app:layout_constraintEnd_toEndOf="@+id/listview1"
+        app:layout_constraintTop_toTopOf="@+id/text_survey_title_first"
+        app:layout_constraintVertical_bias="0.437" />
+
+    <View
+        android:id="@+id/divider1"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_survey_subtitle_first" />
+
+    <TextView
+        android:id="@+id/text_survey_title_second"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:text="2차 설문조사"
+        android:textColor="#000000"
+        android:textSize="24dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="30dp"
+        app:layout_constraintStart_toStartOf="@+id/listview1"
+        app:layout_constraintTop_toTopOf="@+id/divider1" />
+
+    <TextView
+        android:id="@+id/text_survey_subtitle_second"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginTop="10dp"
+        android:text="활성화 날짜 : "
+        android:textColor="#777777"
+        android:textSize="18dp"
+        app:layout_constraintStart_toStartOf="@+id/text_survey_title_second"
+        app:layout_constraintTop_toBottomOf="@+id/text_survey_title_second" />
+
+    <Button
+        android:id="@+id/survey_button_second"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="실시"
+        android:textSize="18sp"
+        android:textColor="@color/white"
+        android:background="@drawable/bg_gradient"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintBottom_toBottomOf="@+id/text_survey_subtitle_second"
+        app:layout_constraintEnd_toEndOf="@+id/listview1"
+        app:layout_constraintTop_toTopOf="@+id/text_survey_title_second"
+        app:layout_constraintVertical_bias="0.437" />
+    <View
+        android:id="@+id/divider2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_survey_subtitle_second" />
+
+
+    <TextView
+        android:id="@+id/text_survey_title_third"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:text="3차 설문조사"
+        android:textColor="#000000"
+        android:textSize="24dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="30dp"
+        app:layout_constraintStart_toStartOf="@+id/listview1"
+        app:layout_constraintTop_toTopOf="@+id/divider2" />
+
+    <TextView
+        android:id="@+id/text_survey_subtitle_third"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginTop="10dp"
+        android:text="활성화 날짜 : "
+        android:textColor="#777777"
+        android:textSize="18dp"
+        app:layout_constraintStart_toStartOf="@+id/text_survey_title_third"
+        app:layout_constraintTop_toBottomOf="@+id/text_survey_title_third" />
+
+    <Button
+        android:id="@+id/survey_button_third"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="실시"
+        android:textSize="18sp"
+        android:textColor="@color/white"
+        android:background="@drawable/bg_gradient"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintBottom_toBottomOf="@+id/text_survey_subtitle_third"
+        app:layout_constraintEnd_toEndOf="@+id/listview1"
+        app:layout_constraintTop_toTopOf="@+id/text_survey_title_third"
+        app:layout_constraintVertical_bias="0.437" />
+    <View
+        android:id="@+id/divider3"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_survey_subtitle_third" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

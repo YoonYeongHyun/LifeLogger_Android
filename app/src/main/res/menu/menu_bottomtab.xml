@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/home"
+        app:showAsAction="ifRoom"
+        android:enabled="true"
+        android:icon="@drawable/home_icon"
+        android:title="홈"/>
+    <item
+        android:id="@+id/surveyList"
+        app:showAsAction="ifRoom"
+        android:enabled="true"
+        android:icon="@drawable/list_check_icon"
+        android:title="설문조사"/>
+    <item
+        android:id="@+id/config"
+        app:showAsAction="ifRoom"
+        android:enabled="true"
+        android:icon="@drawable/config_icon"
+        android:title="설정"/>
+</menu>

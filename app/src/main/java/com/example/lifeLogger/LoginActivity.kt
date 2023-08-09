@@ -32,14 +32,14 @@ import retrofit2.Response
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.Date
-import kotlin.reflect.typeOf
 
 
 class LoginActivity : AppCompatActivity() {
 
     var context: LoginActivity = this
 
-    //뒤로 가기 키 관련 변수
+    //취소 키 관련 변수
+    //terminationTime = 2500 - 2.5초 딜레이
     private var backKeyPressedTime : Long = 0
     private var terminationTime : Long = 2500
 
@@ -47,7 +47,7 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        //헬스커넥트 삼성헬스 앱설치유무에 따라 실행
+        //헬스커넥트 삼성헬스 앱설치유무에 따라 설치 창 출력
         val HealthConnect = "com.google.android.apps.healthdata"
         val SamsungHealth = "com.sec.android.app.shealth"
         val installApp1 = packageManager.getLaunchIntentForPackage(HealthConnect)
@@ -63,7 +63,7 @@ class LoginActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        //헬스커넥터 부여
+        //헬스커넥터 삼성헬스 - 연결 권한 부여
         val requestPermission =
             this.registerForActivityResult(
                 PermissionController.createRequestPermissionResultContract()
@@ -72,15 +72,14 @@ class LoginActivity : AppCompatActivity() {
                     grantedPermissions.contains(HealthPermission.getReadPermission(StepsRecord::class))
                 ) {
                     println(grantedPermissions.contains(HealthPermission.getReadPermission(StepsRecord::class)))
-                    // Read or process steps related health records.
                 } else {
                     println(grantedPermissions.contains(HealthPermission.getReadPermission(StepsRecord::class)))
-
-                    // user denied permission
                 }
             }
 
-        requestPermission.launch(setOf(HealthPermission.getReadPermission(StepsRecord::class),
+        //모바일 앱 권한요청(추후에 안쓰는 권한 삭제 필요)
+        requestPermission.launch(setOf(
+            HealthPermission.getReadPermission(StepsRecord::class),
             HealthPermission.getReadPermission(SpeedRecord::class),
             HealthPermission.getReadPermission(SleepSessionRecord::class),
             HealthPermission.getReadPermission(SleepStageRecord::class),
@@ -89,15 +88,17 @@ class LoginActivity : AppCompatActivity() {
             HealthPermission.getReadPermission(DistanceRecord::class),
         ))
 
-        //아이디 비밀번호 자동 입력
+        //ui요소 객체 생성 (R.id.해당아이디)
         val loginId: EditText = findViewById(R.id.login_id)
         val loginPassword: EditText = findViewById(R.id.login_password)
         val autoCheck: CheckBox = findViewById(R.id.auto_check)
 
+        //아이디 비밀번호 자동 입력 & 로그인
+        //getSharedPreferences 일종의 앱에서 쓰는 쿠기 같은 기능
+        //객체 생성뒤 게터 세터로 사용
         val auto = getSharedPreferences("autoLogin", MODE_PRIVATE)
         val userId = auto.getString("userId", null);
         val passwordNo = auto.getString("passwordNo", null);
-
 
         if(userId != null && passwordNo != null){
             autoCheck.isChecked = true
@@ -106,7 +107,7 @@ class LoginActivity : AppCompatActivity() {
             loginFunction()
         }
 
-        //수집 관련 퍼미션 확인
+        //앱 사용 권한 체크 (나중에 안 쓸거는 제거 해야됨)
         if (ContextCompat.checkSelfPermission(
                 this@LoginActivity, Manifest.permission.READ_CALL_LOG
             ) != PackageManager.PERMISSION_GRANTED
@@ -140,24 +141,7 @@ class LoginActivity : AppCompatActivity() {
             || ContextCompat.checkSelfPermission(
                 this@LoginActivity, Manifest.permission.READ_EXTERNAL_STORAGE
             ) != PackageManager.PERMISSION_GRANTED
-
         ) {
-            println("권한 없음")
-            println("권한 없음")
-            println("권한 없음")
-            println("권한 없음")
-            println("권한 없음")
-            println("권한 없음")
-            println("권한 없음")
-            println("권한 없음")
-            println("권한 없음")
-            println("권한 없음")
-            println("권한 없음")
-            println("권한 없음")
-            println("권한 없음")
-            println("권한 없음")
-            println("권한 없음")
-            println("권한 없음")
             ActivityCompat.requestPermissions(
                 this@LoginActivity,
                 arrayOf(
@@ -167,7 +151,6 @@ class LoginActivity : AppCompatActivity() {
                     Manifest.permission.RECEIVE_SMS, Manifest.permission.READ_SMS,
                     Manifest.permission.ACCESS_MEDIA_LOCATION, Manifest.permission.READ_EXTERNAL_STORAGE,
                     Manifest.permission.RECEIVE_MMS,Manifest.permission.READ_MEDIA_IMAGES,
-
                 ),
                 1
             )
@@ -182,7 +165,7 @@ class LoginActivity : AppCompatActivity() {
             startActivity(permissionIntent)
         }
 
-        //가입 버튼 클릭시 이동
+        //가입 버튼 클릭시 레이아웃 이동
         val joinButton = findViewById<Button>(R.id.join_button)
 
         joinButton.setOnClickListener {
@@ -199,6 +182,8 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
+
+
     private fun loginFunction() {
 
         val loginId: EditText = findViewById(R.id.login_id)
@@ -209,10 +194,15 @@ class LoginActivity : AppCompatActivity() {
         val USER_PWD = loginPassword.text.toString()
         val AUTO_CHECK = autoCheck.isChecked;
 
+        //레트로핏 & 서버설정변수 선언
         val retrofit = RetrofitClient.getInstance()
+        //create먕량어 변수는 APIS.kt에서 확인
         val server = retrofit.create(LoginUserAPI::class.java)
 
         //API사용하여 통신
+        //call, response 콜백 모델(stateModel, userModel 등등) 잘보고 설정
+        // 콜백 모델들은 PostModel.kt 참고
+        //콜백 모델과 php파일 통신 변수명 일치하지 않으면 오류
         server.getLoginUser(USER_ID, USER_PWD).enqueue(object :
             Callback<userModel> {
             override fun onResponse(
@@ -231,7 +221,10 @@ class LoginActivity : AppCompatActivity() {
                         autoLoginEdit.commit()
                     }
                     Toast.makeText(context, "로그인 되었습니다.", Toast.LENGTH_SHORT).show()
-                    MyApi.Logined_id = USER_ID;
+                    MyApi.Logined_id = response.body()?.USER_ID.toString()
+                    MyApi.Logined_name = response.body()?.USER_NAME.toString()
+
+                    //오늘의 상태 입력여부 확인
                     checkTodayState()
 
                 }else{
@@ -244,13 +237,13 @@ class LoginActivity : AppCompatActivity() {
         })
     }
 
+    //오늘의 정신 상태 입력 여부 확인 
     private fun checkTodayState(){
 
         print(MyApi.Logined_id)
 
         var date: Date = Date()
         val df: DateFormat = SimpleDateFormat("yyyyMMdd")
-
 
         val USER_ID = MyApi.Logined_id
         val STATE_DATE: String = df.format(date)
@@ -260,7 +253,6 @@ class LoginActivity : AppCompatActivity() {
         val retrofit = RetrofitClient.getInstance()
         val server = retrofit.create(SelectTodayStateAPI::class.java)
 
-        //API사용하여 통신
         server.getSelectTodayState(USER_ID, STATE_DATE).enqueue(object :
             Callback<stateModel> {
             override fun onResponse(
@@ -314,6 +306,4 @@ class LoginActivity : AppCompatActivity() {
             finishAffinity()
         }
     }
-
-
 }

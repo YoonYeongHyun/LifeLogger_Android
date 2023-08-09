@@ -5,6 +5,9 @@ import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.POST
 
+
+
+
 interface InsertUserAPI {
     @FormUrlEncoded
     @POST(MyApi.insertUser)
@@ -162,5 +165,55 @@ interface SelectTodayStateAPI {
     fun getSelectTodayState(
         @Field("USER_ID") USER_ID: String?,
         @Field("STATE_DATE") STATE_DATE: String?,
+    ): Call<stateModel>
+}
+
+
+interface InsertTodayStateInfoAPI {
+    @FormUrlEncoded
+    @POST(MyApi.insertTodayStateInfo)
+    fun getInsertTodayStateInfo(
+        @Field("USER_ID") USER_ID: String?,
+        @Field("STATE_SCORE") STATE_SCORE: Int,
+        @Field("STATE_DATE") STATE_DATE: String?,
+    ): Call<stateModel>
+}
+
+interface insertUserInfoAPI {
+    @FormUrlEncoded
+    @POST(MyApi.insertUserInfo)
+    fun getInsertUserInfo(
+        @Field("USER_ID") USER_ID: String?,
+        @Field("USER_NAME") USER_NAME: String?,
+        @Field("USER_PWD") USER_PWD: String?,
+        @Field("USER_AGE") USER_AGE: String?,
+        @Field("USER_GENDER") USER_GENDER: String?,
+        @Field("USER_JOB") USER_JOB: String?,
+        @Field("USER_FAMILY_CNT") USER_FAMILY_CNT: String?,
+        @Field("USER_PHONE_NUMBER") USER_PHONE_NUMBER: String?,
+    ): Call<stateModel>
+}
+
+interface SelectSurveyListAPI {
+    @FormUrlEncoded
+    @POST(MyApi.selectSurveyList)
+    fun getSelectSurveyList(
+        @Field("USER_ID") USER_ID: String?,
+    ): Call<surveyModel>
+}
+
+interface InsertSurveyInfoAPI {
+    @FormUrlEncoded
+    @POST(MyApi.insertSurveyInfo)
+    fun getInsertSurveyInfo(
+        @Field("USER_ID") USER_ID: String?,
+        @Field("SURVEY_SEQUENCE") SURVEY_SEQUENCE: String?,
+        @Field("QUESTION_RESULT_1") QUESTION_RESULT_1: String?,
+        @Field("QUESTION_RESULT_2") QUESTION_RESULT_2: String?,
+        @Field("QUESTION_RESULT_3") QUESTION_RESULT_3: String?,
+        @Field("QUESTION_RESULT_4") QUESTION_RESULT_4: String?,
+        @Field("QUESTION_RESULT_5") QUESTION_RESULT_5: String?,
+        @Field("QUESTION_RESULT_6") QUESTION_RESULT_6: String?,
+        @Field("QUESTION_RESULT_7") QUESTION_RESULT_7: String?,
     ): Call<stateModel>
 }

@@ -13,6 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="120dp"
         android:text="오늘의 기분을 선택하세요"
+        android:textSize="18dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
@@ -45,6 +46,7 @@
         android:text="보통"
         android:textAlignment="center"
         android:textStyle="bold"
+        android:textSize="18dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/seekBar" />
@@ -99,6 +101,21 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/vgood" />
 
+    <Button
+        android:id="@+id/saveButton"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="32dp"
+        android:text="상태 저장"
+        android:textSize="18dp"
+        android:background="@drawable/bg_gradient"
+        android:textColor="@color/white"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

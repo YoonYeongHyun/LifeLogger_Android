@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="arraySurveyValues1">
+        <item>선택(필수)</item>
+        <item>19세 이하</item>
+        <item>20대</item>
+        <item>30대</item>
+        <item>40대 이상</item>
+    </string-array>
+
+    <string-array name="arraySurveyValues2">
+        <item>선택(필수)</item>
+        <item>무직</item>
+        <item>학생</item>
+        <item>아르바이트</item>
+        <item>자영업</item>
+        <item>건설업</item>
+        <item>서비스업</item>
+        <item>제조업</item>
+    </string-array>
+
+
+    <string-array name="arraySurveyValues3">
+        <item>선택(필수)</item>
+        <item>1명</item>
+        <item>2명</item>
+        <item>3명</item>
+        <item>4명</item>
+        <item>5명 이상</item>
+    </string-array>
+</resources>

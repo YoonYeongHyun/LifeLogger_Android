@@ -4,7 +4,13 @@ package com.example.lifeLogger
 object MyApi {
     const val TAG: String = "로그"
     var Logined_id = ""
+    var Logined_name = ""
 
+
+    //
+    // 원격에서 20.200.213.94 접속 C:\IISServer\SHARED_KITCHEN\Monitors 에 저장
+    //
+    //
     const val insertUser: String = "insertUser.php"
     const val loginUser: String = "loginUser.php"
     const val insertCallInfo: String = "insertCallInfo.php"
@@ -19,5 +25,9 @@ object MyApi {
     const val insertAppsInfo: String = "insertAppsInfo.php"
     const val deleteAppsInfo: String = "deleteAppsInfo.php"
     const val selectTodayState: String = "selectTodayState.php"
+    const val insertTodayStateInfo: String = "insertTodayStateInfo.php"
+    const val insertUserInfo: String = "insertUserInfo.php"
+    const val selectSurveyList: String = "selectSurveyList.php"
+    const val insertSurveyInfo: String = "insertSurveyInfo.php"
 
 }

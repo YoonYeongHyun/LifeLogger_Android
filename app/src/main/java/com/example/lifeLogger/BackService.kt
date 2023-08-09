@@ -536,8 +536,6 @@ class BackService : Service(), SensorEventListener {
                 var plusMinute2:Int = ((stepRecord.metadata.lastModifiedTime.plusSeconds(60*60*9).epochSecond)/60).toInt()
                 cal1.add(Calendar.MINUTE, plusMinute1)
                 cal2.add(Calendar.MINUTE, plusMinute2)
-                //println(df1.format(cal1.time))
-                //println(df2.format(cal2.time))
 
                 val auto = getSharedPreferences("autoLogin", Service.MODE_PRIVATE)
                 var USER_ID = auto.getString("userId", null);
@@ -809,11 +807,11 @@ class BackService : Service(), SensorEventListener {
                         call: Call<stateModel>,
                         response: Response<stateModel>
                     ) {
-                        Log.d(MyApi.TAG, "통신 성공(수면) : ${response.body()}")
+                        Log.d(MyApi.TAG, "통신 성공(맥박) : ${response.body()}")
                         //Log.d(MyApi.TAG, "USER_ID : $USER_ID, HEART_RATE : $HEART_RATE, RATE_TIME : $RATE_TIME")
                     }
                     override fun onFailure(call: Call<stateModel>, t: Throwable) {
-                        Log.d(MyApi.TAG, "통신 실패(수면) : ${t.localizedMessage}")
+                        Log.d(MyApi.TAG, "통신 실패(맥박) : ${t.localizedMessage}")
                     }
                 })
             }
