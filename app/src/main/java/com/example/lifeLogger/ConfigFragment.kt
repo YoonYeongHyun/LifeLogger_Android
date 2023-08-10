@@ -49,12 +49,20 @@ class ConfigFragment : Fragment()  {
         val user_id = view.findViewById<TextView>(R.id.user_id)
         val logout_button = view.findViewById<Button>(R.id.logout_button)
         val resign_button = view.findViewById<Button>(R.id.resign_button)
-        val button1 = view.findViewById<Button>(R.id.button1)
+        val myInfoButton = view.findViewById<Button>(R.id.myInfoButton)
         val button2 = view.findViewById<Button>(R.id.button2)
         val button3 = view.findViewById<Button>(R.id.button3)
 
         user_id.text = MyApi.Logined_id
         user_name.text = MyApi.Logined_name
+
+        //내정보 수정 버튼 클릭
+        myInfoButton.setOnClickListener(){
+
+            val intent = Intent(requireActivity().application, MyInfoActivity::class.java)
+            startActivity(intent)
+        }
+
         //로그아웃 버튼 클릭 시
         logout_button.setOnClickListener(){
 

@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#EEEEEE"
+    android:background="@color/background"
     tools:context=".DataSituationActivity">
 
 
@@ -25,32 +25,46 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/subTitle"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="50dp"
+        android:gravity="center"
+        android:text="수집 데이터"
+        android:textColor="#000000"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title" />
 
     <View
         android:id="@+id/listview1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="60dp"
-        android:layout_marginBottom="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginLeft="10dp"
-        android:background="@drawable/rectangle_14"
+        android:layout_marginTop="150dp"
+        android:layout_marginBottom="30dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginLeft="5dp"
+        android:background="@drawable/shadow_rectangle_all"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="10dp"></View>
+        app:layout_constraintTop_toTopOf="@+id/subTitle"/>
+
     <ScrollView
+        android:id="@+id/scrollView2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="160dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="40dp"
         android:orientation="vertical"
-        android:layout_marginTop="80dp"
-        android:layout_marginBottom="30dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginLeft="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="SpeakableTextPresentCheck">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -61,272 +75,384 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:paddingTop="10dp"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                android:paddingBottom="10dp"
                 android:weightSum="10">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="걸음 데이터    "
-                    android:textSize="24sp"
-                    android:layout_weight="9"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="성공"
+                    android:layout_weight="6"
+                    android:paddingLeft="20dp"
+                    android:paddingTop="20dp"
+                    android:paddingRight="20dp"
+                    android:paddingBottom="20dp"
+                    android:text="걸음 데이터       "
+                    android:textSize="18sp" />
+
+                <View
+                    android:layout_width="2dp"
+                    android:layout_height="match_parent"
+                    android:background="#EEEEEE" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="15dp"
+                    android:layout_weight="4"
                     android:background="@drawable/rectangle_14_blue"
-                    android:textColor="@color/white"
                     android:gravity="center"
-                    android:textSize="24sp"
-                    android:layout_weight="1"/>
+                    android:text="성공"
+                    android:textColor="@color/white"
+                    android:textSize="18sp" />
+
             </LinearLayout>
+
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="?android:attr/listDivider" />
+                android:layout_height="2dp"
+                android:background="#EEEEEE"/>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:paddingTop="10dp"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                android:paddingBottom="10dp"
                 android:weightSum="10">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="사진 데이터    "
-                    android:textSize="24sp"
-                    android:layout_weight="9"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="성공"
-                    android:background="@drawable/rectangle_14_blue"
-                    android:textColor="@color/white"
-                    android:gravity="center"
-                    android:textSize="24sp"
-                    android:layout_weight="1"/>
-            </LinearLayout>
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="6"
+                    android:paddingLeft="20dp"
+                    android:paddingTop="20dp"
+                    android:paddingRight="20dp"
+                    android:paddingBottom="20dp"
+                    android:text="사진 데이터       "
+                    android:textSize="18sp" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="?android:attr/listDivider" />
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingTop="10dp"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                android:paddingBottom="10dp"
-                android:weightSum="10">
+                <View
+                    android:layout_width="2dp"
+                    android:layout_height="match_parent"
+                    android:background="#EEEEEE"/>
+
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="통화 데이터    "
-                    android:textSize="24sp"
-                    android:layout_weight="9"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="성공"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="15dp"
+                    android:layout_weight="4"
                     android:background="@drawable/rectangle_14_blue"
-                    android:textColor="@color/white"
                     android:gravity="center"
-                    android:textSize="24sp"
-                    android:layout_weight="1"/>
+                    android:text="성공"
+                    android:textColor="@color/white"
+                    android:textSize="18sp" />
             </LinearLayout>
 
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="?android:attr/listDivider" />
+                android:layout_height="2dp"
+                android:background="#EEEEEE"/>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:paddingTop="10dp"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                android:paddingBottom="10dp"
                 android:weightSum="10">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="문자 데이터    "
-                    android:textSize="24sp"
-                    android:layout_weight="9"/>
+                    android:layout_weight="6"
+                    android:paddingLeft="20dp"
+                    android:paddingTop="20dp"
+                    android:paddingRight="20dp"
+                    android:paddingBottom="20dp"
+                    android:text="통화 데이터       "
+                    android:textSize="18sp" />
+
+                <View
+                    android:layout_width="2dp"
+                    android:layout_height="match_parent"
+                    android:background="#EEEEEE"/>
+
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="성공"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="15dp"
+                    android:layout_weight="4"
                     android:background="@drawable/rectangle_14_blue"
-                    android:textColor="@color/white"
                     android:gravity="center"
-                    android:textSize="24sp"
-                    android:layout_weight="1"/>
+                    android:text="성공"
+                    android:textColor="@color/white"
+                    android:textSize="18sp" />
             </LinearLayout>
 
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="?android:attr/listDivider" />
+                android:layout_height="2dp"
+                android:background="#EEEEEE"/>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:paddingTop="10dp"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                android:paddingBottom="10dp"
                 android:weightSum="10">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="수면 데이터    "
-                    android:textSize="24sp"
-                    android:layout_weight="9"/>
+                    android:layout_weight="6"
+                    android:paddingLeft="20dp"
+                    android:paddingTop="20dp"
+                    android:paddingRight="20dp"
+                    android:paddingBottom="20dp"
+                    android:text="문자 데이터       "
+                    android:textSize="18sp" />
+
+                <View
+                    android:layout_width="2dp"
+                    android:layout_height="match_parent"
+                    android:background="#EEEEEE"/>
+
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="성공"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="15dp"
+                    android:layout_weight="4"
                     android:background="@drawable/rectangle_14_blue"
-                    android:textColor="@color/white"
                     android:gravity="center"
-                    android:textSize="24sp"
-                    android:layout_weight="1"/>
+                    android:text="성공"
+                    android:textColor="@color/white"
+                    android:textSize="18sp" />
             </LinearLayout>
 
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="?android:attr/listDivider" />
+                android:layout_height="2dp"
+                android:background="#EEEEEE"/>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:paddingTop="10dp"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                android:paddingBottom="10dp"
                 android:weightSum="10">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_weight="6"
+                    android:paddingLeft="20dp"
+                    android:paddingTop="20dp"
+                    android:paddingRight="20dp"
+                    android:paddingBottom="20dp"
+                    android:text="수면 데이터       "
+                    android:textSize="18sp" />
+
+                <View
+                    android:layout_width="2dp"
+                    android:layout_height="match_parent"
+                    android:background="#EEEEEE"/>
+
+                <TextView
+                    android:id="@+id/sleepStateView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="15dp"
+                    android:layout_weight="4"
+                    android:background="@drawable/rectangle_14_blue"
+                    android:gravity="center"
+                    android:text="성공"
+                    android:textColor="@color/white"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="#EEEEEE"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="10">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="6"
+                    android:paddingLeft="20dp"
+                    android:paddingTop="20dp"
+                    android:paddingRight="20dp"
+                    android:paddingBottom="20dp"
                     android:text="모바일앱 데이터"
-                    android:textSize="24sp"
-                    android:layout_weight="9"/>
+                    android:textSize="18sp" />
+
+                <View
+                    android:layout_width="2dp"
+                    android:layout_height="match_parent"
+                    android:background="#EEEEEE"/>
+
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="성공"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="15dp"
+                    android:layout_weight="4"
                     android:background="@drawable/rectangle_14_blue"
-                    android:textColor="@color/white"
                     android:gravity="center"
-                    android:textSize="24sp"
-                    android:layout_weight="1"/>
+                    android:text="성공"
+                    android:textColor="@color/white"
+                    android:textSize="18sp" />
             </LinearLayout>
 
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="?android:attr/listDivider" />
+                android:layout_height="2dp"
+                android:background="#EEEEEE"/>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:paddingTop="10dp"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                android:paddingBottom="10dp"
                 android:weightSum="10">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="맥박 데이터    "
-                    android:textSize="24sp"
-                    android:layout_weight="9"/>
+                    android:layout_weight="6"
+                    android:paddingLeft="20dp"
+                    android:paddingTop="20dp"
+                    android:paddingRight="20dp"
+                    android:paddingBottom="20dp"
+                    android:text="맥박 데이터       "
+                    android:textSize="18sp" />
+
+                <View
+                    android:layout_width="2dp"
+                    android:layout_height="match_parent"
+                    android:background="#EEEEEE"/>
+
                 <TextView
+                    android:id="@+id/heartStateView"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="성공"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="15dp"
+                    android:layout_weight="4"
                     android:background="@drawable/rectangle_14_blue"
-                    android:textColor="@color/white"
                     android:gravity="center"
-                    android:textSize="24sp"
-                    android:layout_weight="1"/>
+                    android:text="성공"
+                    android:textColor="@color/white"
+                    android:textSize="18sp" />
             </LinearLayout>
 
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="?android:attr/listDivider" />
+                android:layout_height="2dp"
+                android:background="#EEEEEE"/>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:paddingTop="10dp"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                android:paddingBottom="10dp"
                 android:weightSum="10">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="조도 데이터    "
-                    android:textSize="24sp"
-                    android:layout_weight="9"/>
+                    android:layout_weight="6"
+                    android:paddingLeft="20dp"
+                    android:paddingTop="20dp"
+                    android:paddingRight="20dp"
+                    android:paddingBottom="20dp"
+                    android:text="조도 데이터       "
+                    android:textSize="18sp" />
+
+                <View
+                    android:layout_width="2dp"
+                    android:layout_height="match_parent"
+                    android:background="#EEEEEE"/>
+
                 <TextView
+                    android:id="@+id/luxStateView"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="성공"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="15dp"
+                    android:layout_weight="4"
                     android:background="@drawable/rectangle_14_blue"
-                    android:textColor="@color/white"
                     android:gravity="center"
-                    android:textSize="24sp"
-                    android:layout_weight="1"/>
+                    android:text="성공"
+                    android:textColor="@color/white"
+                    android:textSize="18sp" />
             </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="?android:attr/listDivider" />
+                android:layout_height="2dp"
+                android:background="#EEEEEE"/>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:paddingTop="10dp"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                android:paddingBottom="10dp"
                 android:weightSum="10">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_weight="6"
+                    android:paddingLeft="20dp"
+                    android:paddingTop="20dp"
+                    android:paddingRight="20dp"
+                    android:paddingBottom="20dp"
                     android:text="주변소리 데이터"
-                    android:textSize="24sp"
-                    android:layout_weight="9"/>
+                    android:textSize="18sp" />
+
+                <View
+                    android:layout_width="2dp"
+                    android:layout_height="match_parent"
+                    android:background="#EEEEEE"/>
+
                 <TextView
+                    android:id="@+id/dbStateView"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="성공"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="15dp"
+                    android:layout_weight="4"
                     android:background="@drawable/rectangle_14_blue"
-                    android:textColor="@color/white"
                     android:gravity="center"
-                    android:textSize="24sp"
-                    android:layout_weight="1"/>
+                    android:text="성공"
+                    android:textColor="@color/white"
+                    android:textSize="18sp" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

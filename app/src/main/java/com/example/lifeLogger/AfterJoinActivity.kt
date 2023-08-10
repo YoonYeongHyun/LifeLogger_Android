@@ -1,12 +1,10 @@
 package com.example.lifeLogger
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.Button
-import android.widget.EditText
 import android.widget.RadioGroup
 import android.widget.Spinner
 import android.widget.Toast
@@ -44,7 +42,6 @@ class AfterJoinActivity: AppCompatActivity() {
         val spinner1 : Spinner = findViewById(R.id.spinner_1)
         val spinner2 : Spinner = findViewById(R.id.spinner_2)
         val spinner3 : Spinner = findViewById(R.id.spinner_3)
-        val editTextPhone : EditText = findViewById(R.id.editTextPhone)
 
         val gender_radio : RadioGroup = findViewById(R.id.gender_radio)
         spinner1.adapter = ArrayAdapter.createFromResource(context, R.array.arraySurveyValues1, android.R.layout.simple_spinner_item)
@@ -66,12 +63,10 @@ class AfterJoinActivity: AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            var checkedRadioId = gender_radio.checkedRadioButtonId
             var USER_AGE = spinner1.selectedItem.toString()
             var USER_JOB = spinner2.selectedItem.toString()
             var USER_FAMILY_CNT = spinner3.selectedItem.toString()
-            var USER_PHONE_NUMBER = editTextPhone.text.toString()
-            if(USER_AGE == "선택(필수)" || USER_JOB == "선택(필수)" || USER_FAMILY_CNT == "선택(필수)" || USER_PHONE_NUMBER.isEmpty()){
+            if(USER_AGE == "선택(필수)" || USER_JOB == "선택(필수)" || USER_FAMILY_CNT == "선택(필수)" ){
 
                 Toast.makeText(this, "모든 값을 선택하세요.", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
@@ -85,7 +80,7 @@ class AfterJoinActivity: AppCompatActivity() {
             println(USER_PWD)
             //API사용하여 통신
             //call, response 콜백 모델(stateModel, userModel) 잘보고 설정
-            server.getInsertUserInfo(USER_ID, USER_NAME, USER_PWD, USER_AGE, USER_GENDER, USER_JOB, USER_FAMILY_CNT, USER_PHONE_NUMBER).enqueue(object :
+            server.getInsertUserInfo(USER_ID, USER_NAME, USER_PWD, USER_AGE, USER_GENDER, USER_JOB, USER_FAMILY_CNT).enqueue(object :
                 Callback<stateModel> {
                 override fun onResponse(
                     call: Call<stateModel>,

@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#EEEEEE"
+    android:background="@color/background"
     tools:context=".HomeFragment">
 
     <LinearLayout
@@ -13,12 +13,10 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-
-
         <TextView
             android:id="@+id/title"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:text="홈"
             android:paddingLeft="20dp"
             android:paddingTop="10dp"
@@ -31,120 +29,149 @@
             app:layout_constraintTop_toTopOf="parent" />
 
 
-        <RelativeLayout
+        <TextView
+            android:id="@+id/subTitle"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="20dp"
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp"
-            android:paddingBottom="20dp">
+            android:layout_height="50dp"
+            android:text="홈 메뉴 버튼"
+            android:textColor="#000000"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_marginTop="50dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <View
-                android:id="@+id/view1"
-                android:layout_width="match_parent"
-                android:layout_height="174dp"
-                android:background="@drawable/rectangle_14"
-                tools:layout_editor_absoluteX="10dp"/>
-
-            <TextView
-                android:id="@+id/menuTitle1"
-                android:layout_width="wrap_content"
-                android:layout_height="36dp"
-                android:text="수집 데이터 현황"
-                android:layout_marginTop="30dp"
-                android:layout_marginStart="40dp"
-                android:textSize="24sp"/>
-
-            <Button
-                android:id="@+id/dataCheckButton"
-                android:layout_width="match_parent"
-                android:layout_height="36dp"
-                android:text="확인"
-                android:textSize="18dp"
-                android:background="@drawable/bg_gradient"
-                android:textColor="@color/white"
-                android:layout_marginTop="100dp"
-                android:layout_marginStart="80dp"
-                android:layout_marginEnd="80dp" />
-        </RelativeLayout>
-
-
-
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="20dp"
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp"
-            android:paddingBottom="20dp">
+            android:layout_height="214dp"
+            android:orientation="horizontal"
+            android:weightSum="2">
 
-            <View
-                android:id="@+id/view2"
-                android:layout_width="match_parent"
-                android:layout_height="174dp"
-                android:background="@drawable/rectangle_14"
-                tools:layout_editor_absoluteX="10dp"/>
-
-            <TextView
-                android:id="@+id/menuTitle2"
-                android:layout_width="wrap_content"
-                android:layout_height="36dp"
-                android:text="헬스 커넥트"
+            <RelativeLayout
+                android:layout_weight="1"
                 android:layout_marginTop="30dp"
-                android:layout_marginStart="40dp"
-                android:textSize="24sp"/>
-
-            <Button
-                android:id="@+id/connectButton"
                 android:layout_width="match_parent"
-                android:layout_height="36dp"
-                android:text="실행"
-                android:textSize="18dp"
-                android:background="@drawable/bg_gradient"
-                android:textColor="@color/white"
-                android:layout_marginTop="100dp"
-                android:layout_marginStart="80dp"
-                android:layout_marginEnd="80dp" />
+                android:layout_height="wrap_content"
+                android:paddingStart="15dp">
+                <View
+                    android:id="@+id/view1"
+                    android:layout_width="match_parent"
+                    android:layout_height="174dp"
+                    android:background="@drawable/shadow_rectangle_all"
+                    tools:layout_editor_absoluteX="10dp"/>
+                <ImageButton
+                    android:id="@+id/dataCheckButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="40dp"
+                    android:layout_marginLeft="65dp"
+                    android:layout_marginRight="65dp"
+                    android:layout_marginBottom="80dp"
+                    android:background="@color/white"
+                    android:src="@drawable/data_check"
+                    android:scaleType="fitXY"/>
+                <TextView
+                    android:id="@+id/menuTitle1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="수집 데이터 현황"
+                    android:textSize="18sp"
+                    android:layout_alignStart="@+id/view1"
+                    android:layout_alignEnd="@+id/view1"
+                    android:layout_alignBottom="@+id/view1"
+                    android:layout_marginBottom="40dp"/>
+            </RelativeLayout>
 
-        </RelativeLayout>
+            <RelativeLayout
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:paddingEnd="15dp">
+                <View
+                    android:id="@+id/view2"
+                    android:layout_width="match_parent"
+                    android:layout_height="174dp"
+                    android:background="@drawable/shadow_rectangle_all"
+                    tools:layout_editor_absoluteX="10dp"/>
+                <ImageButton
+                    android:id="@+id/connectButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="40dp"
+                    android:layout_marginLeft="65dp"
+                    android:layout_marginRight="65dp"
+                    android:layout_marginBottom="80dp"
+                    android:background="@color/white"
+                    android:src="@drawable/healthconnect"
+                    android:scaleType="fitXY"/>
+                <TextView
+                    android:id="@+id/menuTitle2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/view2"
+                    android:layout_marginBottom="40dp"
+                    android:gravity="center"
+                    android:text="헬스 커넥트"
+                    android:textSize="18sp" />
+            </RelativeLayout>
 
+        </LinearLayout>
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="20dp"
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp"
-            android:paddingBottom="20dp">
+            android:layout_height="214dp"
+            android:orientation="horizontal"
+            android:weightSum="2">
 
-            <View
-                android:id="@+id/view3"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="174dp"
-                android:background="@drawable/rectangle_14"
-                tools:layout_editor_absoluteX="10dp"/>
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="30dp"
+                android:layout_weight="1"
+                android:paddingStart="15dp">
+                <View
+                    android:id="@+id/view3"
+                    android:layout_width="match_parent"
+                    android:layout_height="174dp"
+                    android:background="@drawable/shadow_rectangle_all"
+                    tools:layout_editor_absoluteX="10dp" />
+                <ImageButton
+                    android:id="@+id/samsungButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="40dp"
+                    android:layout_marginLeft="65dp"
+                    android:layout_marginRight="65dp"
+                    android:layout_marginBottom="80dp"
+                    android:background="@color/white"
+                    android:src="@drawable/samsunghealth"
+                    android:scaleType="fitXY"/>
+                <TextView
+                    android:id="@+id/menuTitle3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/view3"
+                    android:layout_marginBottom="40dp"
+                    android:gravity="center"
+                    android:text="삼성헬스"
+                    android:textSize="18sp"/>
+            </RelativeLayout>
 
-            <TextView
-                android:id="@+id/menuTitle3"
-                android:layout_width="wrap_content"
-                android:layout_height="36dp"
-                android:text="삼성헬스"
-                android:layout_marginTop="30dp"
-                android:layout_marginStart="40dp"
-                android:textSize="24sp"/>
-
-            <Button
-                android:id="@+id/samsungButton"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="36dp"
-                android:text="실행"
-                android:textSize="18dp"
-                android:background="@drawable/bg_gradient"
-                android:textColor="@color/white"
-                android:layout_marginTop="100dp"
-                android:layout_marginStart="80dp"
-                android:layout_marginEnd="80dp" />
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingStart="10dp"
+                android:paddingTop="20dp"
+                android:paddingEnd="15dp"
+                android:paddingBottom="20dp">
 
-        </RelativeLayout>
+            </RelativeLayout>
+
+        </LinearLayout>
+
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

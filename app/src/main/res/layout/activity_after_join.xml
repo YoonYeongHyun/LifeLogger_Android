@@ -64,11 +64,11 @@ tools:context=".AfterJoinActivity">
         android:id="@+id/textView_1"
         android:layout_width="80dp"
         android:layout_height="48dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="20dp"
         android:text="연령"
         android:gravity="center_vertical"
         android:textSize="18sp"
+        android:layout_marginTop="40dp"
+        android:layout_marginStart="40dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/gender_radio" />
 
@@ -76,8 +76,10 @@ tools:context=".AfterJoinActivity">
         android:id="@+id/spinner_1"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:layout_marginEnd="40dp"
+        android:background="@drawable/rectangle_14_edit_text"
+        android:paddingLeft="20dp"
         android:layout_marginStart="120dp"
+        android:layout_marginEnd="40dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView_1"
         app:layout_constraintTop_toTopOf="@+id/textView_1" />
@@ -87,11 +89,11 @@ tools:context=".AfterJoinActivity">
         android:id="@+id/textView_2"
         android:layout_width="80dp"
         android:layout_height="48dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="20dp"
         android:text="직업"
         android:gravity="center_vertical"
         android:textSize="18sp"
+        android:layout_marginTop="40dp"
+        android:layout_marginStart="40dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView_1" />
 
@@ -99,8 +101,10 @@ tools:context=".AfterJoinActivity">
         android:id="@+id/spinner_2"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:layout_marginEnd="40dp"
+        android:background="@drawable/rectangle_14_edit_text"
+        android:paddingLeft="20dp"
         android:layout_marginStart="120dp"
+        android:layout_marginEnd="40dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView_2"
         app:layout_constraintTop_toTopOf="@+id/textView_2" />
@@ -109,11 +113,11 @@ tools:context=".AfterJoinActivity">
         android:id="@+id/textView_3"
         android:layout_width="80dp"
         android:layout_height="48dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="20dp"
         android:text="가족규모"
         android:gravity="center_vertical"
         android:textSize="18sp"
+        android:layout_marginTop="40dp"
+        android:layout_marginStart="40dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView_2" />
 
@@ -121,6 +125,8 @@ tools:context=".AfterJoinActivity">
         android:id="@+id/spinner_3"
         android:layout_width="match_parent"
         android:layout_height="48dp"
+        android:background="@drawable/rectangle_14_edit_text"
+        android:paddingLeft="20dp"
         android:layout_marginEnd="40dp"
         android:layout_marginStart="120dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -128,43 +134,19 @@ tools:context=".AfterJoinActivity">
         app:layout_constraintTop_toTopOf="@+id/textView_3" />
 
 
-    <TextView
-        android:id="@+id/textView_4"
-        android:layout_width="80dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="20dp"
-        android:text="연락처"
-        android:gravity="center_vertical"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView_3" />
-
-
-    <EditText
-        android:id="@+id/editTextPhone"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:ems="10"
-        android:inputType="phone"
-        android:layout_marginEnd="40dp"
-        android:layout_marginStart="120dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textView_4" />
     <Button
         android:id="@+id/save_button"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:text="가입"
-        android:background="@drawable/bg_gradient"
-        android:textColor="@color/white"
-        android:layout_marginTop="30dp"
         android:layout_marginStart="40dp"
         android:layout_marginEnd="40dp"
+        android:background="@drawable/bg_gradient"
+        android:text="가입"
+        android:textColor="@color/white"
+        android:layout_marginTop="40dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView_4" />
+        app:layout_constraintTop_toBottomOf="@+id/spinner_3" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

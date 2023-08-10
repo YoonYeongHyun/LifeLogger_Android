@@ -9,6 +9,7 @@ import android.widget.Button
 import androidx.fragment.app.Fragment
 import android.content.pm.PackageManager
 import android.net.Uri
+import android.widget.ImageButton
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -26,9 +27,9 @@ class HomeFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
-    var dataCheckButton = view?.findViewById<(Button)>(R.id.dataCheckButton)
-    var connectButton = view?.findViewById<(Button)>(R.id.connectButton)
-    var samsungButton = view?.findViewById<(Button)>(R.id.samsungButton)
+    var dataCheckButton = view?.findViewById<(ImageButton)>(R.id.dataCheckButton)
+    var connectButton = view?.findViewById<(ImageButton)>(R.id.connectButton)
+    var samsungButton = view?.findViewById<(ImageButton)>(R.id.samsungButton)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,9 +48,9 @@ class HomeFragment : Fragment() {
         val SamsungHealth = "com.sec.android.app.shealth"
 
 
-        dataCheckButton = view?.findViewById<(Button)>(R.id.dataCheckButton)
-        connectButton = view?.findViewById<(Button)>(R.id.connectButton)
-        samsungButton = view?.findViewById<(Button)>(R.id.samsungButton)
+        dataCheckButton = view?.findViewById<(ImageButton)>(R.id.dataCheckButton)
+        connectButton = view?.findViewById<(ImageButton)>(R.id.connectButton)
+        samsungButton = view?.findViewById<(ImageButton)>(R.id.samsungButton)
 
         dataCheckButton?.setOnClickListener{view->
             println("클릭")

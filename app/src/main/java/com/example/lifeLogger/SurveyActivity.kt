@@ -149,9 +149,9 @@ class SurveyActivity : AppCompatActivity()  {
                         response: Response<stateModel>
                     ) {
                         Log.d(MyApi.TAG, "통신 성공(설문) : ${response.body()}")
-                        val SureyListIntent = Intent(applicationContext, MainActivity::class.java)
-                        SureyListIntent.putExtra("Direction","SurveyList")
-                        startActivity(SureyListIntent)
+                        val surveyListIntent = Intent(applicationContext, MainActivity::class.java)
+                        surveyListIntent.putExtra("Direction","SurveyList")
+                        startActivity(surveyListIntent)
                     }
                     override fun onFailure(call: Call<stateModel>, t: Throwable) {
                         Log.d(MyApi.TAG, "통신 실패(설문) : ${t.localizedMessage}")

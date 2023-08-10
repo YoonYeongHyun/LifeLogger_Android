@@ -94,3 +94,61 @@ data class surveyModel(
     @SerializedName("THIRD_SURVEY_FLAG")
     var THIRD_SURVEY_FLAG: String?,
 )
+
+
+data class dataSituationModel(
+
+    @Expose
+    @SerializedName("STATE")
+    var STATE: String?,
+
+    @Expose
+    @SerializedName("MESSAGE")
+    var MESSAGE: String?,
+
+    @Expose
+    @SerializedName("SLEEP_COUNT")
+    var SLEEP_COUNT: String?,
+
+    @Expose
+    @SerializedName("HEART_COUNT")
+    var HEART_COUNT: String?,
+
+    @Expose
+    @SerializedName("LUX_COUNT")
+    var LUX_COUNT: String?,
+
+    @Expose
+    @SerializedName("DB_COUNT")
+    var DB_COUNT: String?,
+
+)
+
+data class myInfoModel(
+
+    @Expose
+    @SerializedName("STATE")
+    var STATE: String?,
+
+    @Expose
+    @SerializedName("MESSAGE")
+    var MESSAGE: String?,
+
+    @Expose
+    @SerializedName("USER_AGE")
+    var USER_AGE: String?,
+
+    @Expose
+    @SerializedName("USER_GENDER")
+    var USER_GENDER: String?,
+
+    @Expose
+    @SerializedName("USER_JOB")
+    var USER_JOB: String?,
+
+    @Expose
+    @SerializedName("USER_FAMILY_CNT")
+    var USER_FAMILY_CNT: String?,
+
+
+    )

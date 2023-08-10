@@ -190,7 +190,6 @@ interface insertUserInfoAPI {
         @Field("USER_GENDER") USER_GENDER: String?,
         @Field("USER_JOB") USER_JOB: String?,
         @Field("USER_FAMILY_CNT") USER_FAMILY_CNT: String?,
-        @Field("USER_PHONE_NUMBER") USER_PHONE_NUMBER: String?,
     ): Call<stateModel>
 }
 
@@ -215,5 +214,34 @@ interface InsertSurveyInfoAPI {
         @Field("QUESTION_RESULT_5") QUESTION_RESULT_5: String?,
         @Field("QUESTION_RESULT_6") QUESTION_RESULT_6: String?,
         @Field("QUESTION_RESULT_7") QUESTION_RESULT_7: String?,
+    ): Call<stateModel>
+}
+
+interface SelectDataSituationAPI {
+    @FormUrlEncoded
+    @POST(MyApi.selectDataSituation)
+    fun getSelectDataSituation(
+        @Field("USER_ID") USER_ID: String?,
+        @Field("DATE_TIME") SURVEY_SEQUENCE: String?,
+    ): Call<dataSituationModel>
+}
+
+interface SelectMyInfoAPI {
+    @FormUrlEncoded
+    @POST(MyApi.selectMyInfo)
+    fun getSelectMyInfo(
+        @Field("USER_ID") USER_ID: String?
+    ): Call<myInfoModel>
+}
+
+interface UpdateUserInfoAPI {
+    @FormUrlEncoded
+    @POST(MyApi.updateUserInfo)
+    fun getUpdateUserInfo(
+        @Field("USER_ID") USER_ID: String?,
+        @Field("USER_AGE") USER_AGE: String?,
+        @Field("USER_GENDER") USER_GENDER: String?,
+        @Field("USER_JOB") USER_JOB: String?,
+        @Field("USER_FAMILY_CNT") USER_FAMILY_CNT: String?,
     ): Call<stateModel>
 }

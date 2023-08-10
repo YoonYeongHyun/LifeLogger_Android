@@ -66,15 +66,6 @@
             android:name=".BackService"
             android:enabled="true"
             android:exported="true" />
-        <!--
-        <activity android:name=".PermissionsRationaleActivity" exported="true">
-            <intent-filter>
-                <action android:name="androidx.health.ACTION_SHOW_PERMISSIONS_RATIONALE"/>
-            </intent-filter>
-            <meta-data android:name="health_permissions"
-                android:resource="@array/health_permissions" />
-        </activity>
-        -->
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -110,32 +101,15 @@
             android:name=".DataSituationActivity"
             android:exported="true">
         </activity>
+        <activity
+            android:name=".MyInfoActivity"
+            android:exported="true">
+        </activity>
         <receiver android:name=".MyAlarmReceiver" android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
             </intent-filter>
         </receiver>
-        <!--
-        <receiver
-            android:name=".MyReceiver"
-            android:enabled="true"
-            android:exported="true">
-            <intent-filter>
-                <action
-                    android:name="android.intent.action.PHONE_STATE"
-                    android:exported="true" />
-            </intent-filter>
-            <intent-filter android:priority="1">
-                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
-            </intent-filter>
-            <intent-filter android:priority="1">
-                <action android:name="android.provider.Telephony.SMS_SENT" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="com.google.android.gms.auth.api.phone.SMS_RETRIEVED" />
-            </intent-filter>
-        </receiver>
-        -->
     </application>
 
 </manifest>

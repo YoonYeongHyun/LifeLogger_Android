@@ -11,4 +11,7 @@
     <!--<color name="colorPrimaryDark">#0A9F67</color>-->
     <color name="colorAccent">#000000</color>
     <color name="colorGray">#8C8C8C</color>
+    <color name="colorHint">#8C8C8C</color>
+    <color name="background">#EDF2FF</color>
+
 </resources>

@@ -24,9 +24,10 @@ class TodayStateActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_today_state)
 
+        var nameTitleText = findViewById<TextView>(R.id.nameTitleText)
+        nameTitleText.text = MyApi.Logined_name + "님"
+
         val seekBar:SeekBar = findViewById(R.id.seekBar)
-
-
 
         seekBar.setOnSeekBarChangeListener(object : OnSeekBarChangeListener {
             override fun onProgressChanged(p1: SeekBar, p2: Int, p3: Boolean) {

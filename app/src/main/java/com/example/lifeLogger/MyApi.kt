@@ -29,5 +29,9 @@ object MyApi {
     const val insertUserInfo: String = "insertUserInfo.php"
     const val selectSurveyList: String = "selectSurveyList.php"
     const val insertSurveyInfo: String = "insertSurveyInfo.php"
+    const val selectDataSituation: String = "selectDataSituation.php"
+    const val selectMyInfo: String = "selectMyInfo.php"
+    const val updateUserInfo: String = "updateUserInfo.php"
+
 
 }
