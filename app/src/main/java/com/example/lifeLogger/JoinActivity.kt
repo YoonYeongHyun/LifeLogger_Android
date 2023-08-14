@@ -81,7 +81,7 @@ class JoinActivity : AppCompatActivity() {
             val USER_NAME = joinName.text.toString()
 
             val retrofit = RetrofitClient.getInstance()
-            val server = retrofit.create(InsertUserAPI::class.java)
+            val server = retrofit.create(SelectUserAPI::class.java)
 
             //API사용하여 통신
             server.getInsertUser(USER_ID, USER_PWD, USER_NAME).enqueue(object : Callback<userModel> {

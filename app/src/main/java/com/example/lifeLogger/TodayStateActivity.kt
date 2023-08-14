@@ -26,9 +26,14 @@ class TodayStateActivity : AppCompatActivity() {
 
         var nameTitleText = findViewById<TextView>(R.id.nameTitleText)
         nameTitleText.text = MyApi.Logined_name + "님"
+        val imageVbad : ImageView = findViewById(R.id.imageVbad)
+        val imageBad : ImageView = findViewById(R.id.imageBad)
+        val imageNormal : ImageView = findViewById(R.id.imageNormal)
+        val imageGood : ImageView = findViewById(R.id.imageGood)
+        val imageVgood : ImageView = findViewById(R.id.imageVgood)
 
+        /*
         val seekBar:SeekBar = findViewById(R.id.seekBar)
-
         seekBar.setOnSeekBarChangeListener(object : OnSeekBarChangeListener {
             override fun onProgressChanged(p1: SeekBar, p2: Int, p3: Boolean) {
                 seekBarValue = p2 + 1
@@ -44,6 +49,32 @@ class TodayStateActivity : AppCompatActivity() {
                 Log.d("SeekbarLog", "터치 끝 $p1")
             }
         })
+         */
+
+        imageVbad.setOnClickListener{
+            seekBarValue = 1
+            context.change_emo(seekBarValue)
+        }
+
+        imageBad.setOnClickListener{
+            seekBarValue = 2
+            context.change_emo(seekBarValue)
+        }
+
+        imageNormal.setOnClickListener{
+            seekBarValue = 3
+            context.change_emo(seekBarValue)
+        }
+
+        imageGood.setOnClickListener{
+            seekBarValue = 4
+            context.change_emo(seekBarValue)
+        }
+
+        imageVgood.setOnClickListener{
+            seekBarValue = 5
+            context.change_emo(seekBarValue)
+        }
 
         val saveButton : Button  = findViewById(R.id.saveButton)
 

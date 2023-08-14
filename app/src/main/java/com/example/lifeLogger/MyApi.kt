@@ -11,7 +11,7 @@ object MyApi {
     // 원격에서 20.200.213.94 접속 C:\IISServer\SHARED_KITCHEN\Monitors 에 저장
     //
     //
-    const val insertUser: String = "insertUser.php"
+    const val selectUser: String = "selectUser.php"
     const val loginUser: String = "loginUser.php"
     const val insertCallInfo: String = "insertCallInfo.php"
     const val insertMessageInfo: String = "insertMessageInfo.php"

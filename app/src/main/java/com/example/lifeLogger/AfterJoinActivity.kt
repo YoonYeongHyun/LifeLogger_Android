@@ -74,7 +74,7 @@ class AfterJoinActivity: AppCompatActivity() {
 
             //레트로핏 & 서버설정변수 선언
             val retrofit = RetrofitClient.getInstance()
-            val server = retrofit.create(insertUserInfoAPI::class.java)
+            val server = retrofit.create(InsertUserInfoAPI::class.java)
             println(USER_ID)
             println(USER_NAME)
             println(USER_PWD)

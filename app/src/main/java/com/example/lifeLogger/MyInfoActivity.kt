@@ -65,10 +65,11 @@ class MyInfoActivity: AppCompatActivity()  {
                  }
 
                 when (USER_AGE) {
-                    "19세 이하"  -> spinner1.setSelection(1)
-                    "20대"      -> spinner1.setSelection(2)
-                    "30대"      -> spinner1.setSelection(3)
-                    "40대 이상"  -> spinner1.setSelection(4)
+                    "10대"  -> spinner1.setSelection(1)
+                    "20대"  -> spinner1.setSelection(2)
+                    "30대"  -> spinner1.setSelection(3)
+                    "40대"  -> spinner1.setSelection(4)
+                    "50대"  -> spinner1.setSelection(5)
                 }
 
                 when (USER_JOB) {

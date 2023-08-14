@@ -798,7 +798,7 @@ class BackService : Service(), SensorEventListener {
                 }
 
                 val retrofit = RetrofitClient.getInstance()
-                val server = retrofit.create(insertHeartRateInfoAPI::class.java)
+                val server = retrofit.create(InsertHeartRateInfoAPI::class.java)
 
                 //API사용하여 통신
                 server.getInsertHeartRateInfo(USER_ID, HEART_RATE, RATE_TIME).enqueue(object :
@@ -850,7 +850,7 @@ class BackService : Service(), SensorEventListener {
             }
 
             val retrofit = RetrofitClient.getInstance()
-            val server = retrofit.create(insertLuxInfoAPI::class.java)
+            val server = retrofit.create(InsertLuxInfoAPI::class.java)
 
             //API사용하여 통신
             server.getInsertLuxInfo(USER_ID, LUX_VALUE, LUX_TIME).enqueue(object :
@@ -897,8 +897,7 @@ class BackService : Service(), SensorEventListener {
                 System.out.println(amplitude)
                 System.out.println("db : $db")
                 if (db < 0) {
-                    //진폭이 0 보다 크면 .. toDoSomething
-                    //진폭이 0이하이면 데시벨이 -무한대로 나옵니다.
+                    //진폭이 0이하이면 데시벨이 -무한대로 나옴
                 }else{
                     db_flag = false
                     println("데시벨 : " + db + "\n")
@@ -925,7 +924,7 @@ class BackService : Service(), SensorEventListener {
                         }
 
                         val retrofit = RetrofitClient.getInstance()
-                        val server = retrofit.create(insertDbInfoAPI::class.java)
+                        val server = retrofit.create(InsertDbInfoAPI::class.java)
 
                         //API사용하여 통신
                         server.getInsertDbInfo(USER_ID, DB_VALUE, DB_TIME).enqueue(object :
@@ -970,7 +969,7 @@ class BackService : Service(), SensorEventListener {
             }
 
             val retrofit = RetrofitClient.getInstance()
-            val server = retrofit.create(deleteAppsInfoAPI::class.java)
+            val server = retrofit.create(DeleteAppsInfoAPI::class.java)
 
             server.getDeleteAppsInfo(USER_ID).enqueue(object :
                 Callback<stateModel> {
@@ -1101,7 +1100,7 @@ class BackService : Service(), SensorEventListener {
                 }
 
                 val retrofit = RetrofitClient.getInstance()
-                val server = retrofit.create(insertAppsInfoAPI::class.java)
+                val server = retrofit.create(InsertAppsInfoAPI::class.java)
 
                 //API사용하여 통신
                 server.getInsertAppsInfo(USER_ID, ACC_COUNT, AUDIO_COUNT, GAME_COUNT, IMAGE_COUNT, MAPS_COUNT,

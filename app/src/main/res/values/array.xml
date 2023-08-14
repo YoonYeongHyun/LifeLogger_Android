@@ -2,10 +2,11 @@
 <resources>
     <string-array name="arraySurveyValues1">
         <item>선택(필수)</item>
-        <item>19세 이하</item>
+        <item>10대</item>
         <item>20대</item>
         <item>30대</item>
-        <item>40대 이상</item>
+        <item>40대</item>
+        <item>50대 이상</item>
     </string-array>
 
     <string-array name="arraySurveyValues2">
@@ -19,7 +20,6 @@
         <item>제조업</item>
         <item>IT</item>
     </string-array>
-
 
     <string-array name="arraySurveyValues3">
         <item>선택(필수)</item>

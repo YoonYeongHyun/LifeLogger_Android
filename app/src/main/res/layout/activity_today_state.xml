@@ -57,16 +57,16 @@
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
         android:text="오늘 기분은 어떠신가요"
         android:textColor="#000000"
         android:textSize="18dp"
         android:textStyle="bold"
-        android:layout_marginTop="30dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/nameTitleText" />
-
+    <!--
     <SeekBar
         android:id="@+id/seekBar"
         style="@style/Widget.AppCompat.SeekBar.Discrete"
@@ -85,28 +85,29 @@
         app:layout_constraintHorizontal_bias="0.492"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView1" />
+    -->
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="100dp"
         android:layout_height="40dp"
-        android:layout_marginTop="40dp"
         android:text="보통"
         android:textAlignment="center"
-        android:textStyle="bold"
         android:textSize="18dp"
+        android:textStyle="bold"
+        android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/seekBar" />
+        app:layout_constraintTop_toBottomOf="@+id/imageNormal" />
 
     <ImageView
         android:id="@+id/imageVbad"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_marginStart="13dp"
-        android:layout_marginBottom="10dp"
-        app:layout_constraintBottom_toTopOf="@+id/seekBar"
+        android:layout_marginTop="20dp"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView1"
         app:srcCompat="@drawable/vbad" />
 
     <ImageView
@@ -114,9 +115,9 @@
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_marginBottom="10dp"
-        app:layout_constraintBottom_toTopOf="@+id/seekBar"
         app:layout_constraintEnd_toStartOf="@+id/imageNormal"
         app:layout_constraintStart_toEndOf="@+id/imageVbad"
+        app:layout_constraintTop_toTopOf="@+id/imageVbad"
         app:srcCompat="@drawable/bad" />
 
     <ImageView
@@ -124,9 +125,9 @@
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_marginBottom="10dp"
-        app:layout_constraintBottom_toTopOf="@+id/seekBar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imageVbad"
         app:srcCompat="@drawable/normal_checked" />
 
     <ImageView
@@ -134,9 +135,9 @@
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_marginBottom="10dp"
-        app:layout_constraintBottom_toTopOf="@+id/seekBar"
         app:layout_constraintEnd_toStartOf="@+id/imageVgood"
         app:layout_constraintStart_toEndOf="@+id/imageNormal"
+        app:layout_constraintTop_toTopOf="@+id/imageVbad"
         app:srcCompat="@drawable/good" />
 
     <ImageView
@@ -145,8 +146,8 @@
         android:layout_height="48dp"
         android:layout_marginEnd="13dp"
         android:layout_marginBottom="10dp"
-        app:layout_constraintBottom_toTopOf="@+id/seekBar"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imageVbad"
         app:srcCompat="@drawable/vgood" />
 
     <Button

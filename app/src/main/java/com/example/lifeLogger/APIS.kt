@@ -8,9 +8,9 @@ import retrofit2.http.POST
 
 
 
-interface InsertUserAPI {
+interface SelectUserAPI {
     @FormUrlEncoded
-    @POST(MyApi.insertUser)
+    @POST(MyApi.selectUser)
     fun getInsertUser(
         @Field("USER_ID") USER_ID: String?,
         @Field("USER_PWD") USER_PWD: String,
@@ -102,7 +102,7 @@ interface InsertSleepInfoAPI {
     ): Call<stateModel>
 }
 
-interface insertHeartRateInfoAPI {
+interface InsertHeartRateInfoAPI {
     @FormUrlEncoded
     @POST(MyApi.insertHeartRateInfo)
     fun getInsertHeartRateInfo(
@@ -112,7 +112,7 @@ interface insertHeartRateInfoAPI {
         ): Call<stateModel>
 }
 
-interface insertLuxInfoAPI {
+interface InsertLuxInfoAPI {
     @FormUrlEncoded
     @POST(MyApi.insertLuxInfo)
     fun getInsertLuxInfo(
@@ -122,7 +122,7 @@ interface insertLuxInfoAPI {
     ): Call<stateModel>
 }
 
-interface insertDbInfoAPI {
+interface InsertDbInfoAPI {
     @FormUrlEncoded
     @POST(MyApi.insertDbInfo)
     fun getInsertDbInfo(
@@ -133,7 +133,7 @@ interface insertDbInfoAPI {
 }
 
 
-interface insertAppsInfoAPI {
+interface InsertAppsInfoAPI {
     @FormUrlEncoded
     @POST(MyApi.insertAppsInfo)
     fun getInsertAppsInfo(
@@ -150,7 +150,7 @@ interface insertAppsInfoAPI {
     ): Call<stateModel>
 }
 
-interface deleteAppsInfoAPI {
+interface DeleteAppsInfoAPI {
     @FormUrlEncoded
     @POST(MyApi.deleteAppsInfo)
     fun getDeleteAppsInfo(
@@ -179,7 +179,7 @@ interface InsertTodayStateInfoAPI {
     ): Call<stateModel>
 }
 
-interface insertUserInfoAPI {
+interface InsertUserInfoAPI {
     @FormUrlEncoded
     @POST(MyApi.insertUserInfo)
     fun getInsertUserInfo(
